@@ -1,525 +1,189 @@
-    body {
-        background-color: #0252cf;
-        color: #ffffff;
-        overflow-x: hidden;
-        min-height: 100vh;
-    }
-
-    /* Header Navigation */
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 24px 6%;
-        max-width: 1440px;
-        margin: 0 auto;
-    }
-
-    .left-nav {
-        display: flex;
-        align-items: center;
-        gap: 40px;
-    }
-
-    .logo-container img {
-        height: 36px;
-        display: block;
-    }
-
-    .nav-links {
-        display: flex;
-        gap: 28px;
-    }
-
-    .nav-links a {
-        color: #ffffff;
-        text-decoration: none;
-        font-size: 15px;
-        font-weight: 500;
-        opacity: 0.9;
-        transition: opacity 0.2s;
-    }
-
-    .nav-links a:hover {
-        opacity: 1;
-    }
-
-    .right-nav {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .lang-select {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        margin-right: 10px;
-    }
-
-    .btn-login {
-        border: 1px solid rgba(255, 255, 255, 0.7);
-        color: #ffffff;
-        padding: 8px 22px;
-        border-radius: 20px;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 500;
-        transition: all 0.2s;
-    }
-
-    .btn-login:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .btn-register {
-        background-color: #ffffff;
-        color: #0252cf;
-        padding: 8px 22px;
-        border-radius: 20px;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 600;
-        transition: all 0.2s;
-    }
-
-    .btn-register:hover {
-        background-color: #f0f4ff;
-    }
-
-    /* Hero Section */
-    .hero {
-        max-width: 1440px;
-        margin: 0 auto;
-        padding: 40px 6% 80px;
-        display: grid;
-        grid-template-columns: 1.05fr 1.15fr;
-        gap: 40px;
-        align-items: center;
-        position: relative;
-    }
-
-    .hero-content h1 {
-        font-size: 50px;
-        line-height: 1.2;
-        font-weight: 800;
-        margin-bottom: 24px;
-        letter-spacing: -0.5px;
-    }
-
-    .hero-content p {
-        font-size: 15px;
-        line-height: 1.75;
-        color: rgba(255, 255, 255, 0.85);
-        margin-bottom: 40px;
-        max-width: 520px;
-        font-weight: 400;
-    }
-
-    .btn-cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        background-color: #ffffff;
-        color: #0252cf;
-        padding: 14px 32px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 700;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .btn-cta:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-    }
-
-    /* Right Graphic Showcase Area */
-    .hero-graphics {
-        position: relative;
-        height: 520px;
-        width: 100%;
-    }
-
-    /* Main Window Mockup */
-    .window-mockup {
-        position: absolute;
-        right: 0;
-        top: 20px;
-        width: 85%;
-        height: 400px;
-        background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        backdrop-filter: blur(10px);
-        padding: 16px;
-    }
-
-    .window-header {
-        display: flex;
-        gap: 6px;
-        margin-bottom: 20px;
-    }
-
-    .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.4);
-    }
-
-    .mock-menu {
-        display: flex;
-        gap: 20px;
-        font-size: 12px;
-        color: rgba(255,255,255,0.5);
-        margin-left: 20px;
-    }
-
-    /* Person Image Placeholder / Simulated */
-    .person-container {
-        position: absolute;
-        right: 12%;
-        bottom: 20px;
-        z-index: 10;
-        width: 320px;
-        height: 440px;
-    }
-
-    .person-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: top;
-        border-radius: 20px;
-        filter: drop-shadow(0 15px 30px rgba(0,0,0,0.3));
-    }
-
-    /* Card Top Right (SKU) */
-    .card-sku {
-        position: absolute;
-        top: 20px;
-        right: -10px;
-        background: rgba(235, 243, 255, 0.92);
-        backdrop-filter: blur(8px);
-        border-radius: 16px;
-        padding: 16px 20px;
-        width: 240px;
-        color: #1e293b;
-        z-index: 12;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    }
-
-    .card-sku h4 {
-        font-size: 13px;
-        font-weight: 700;
-        color: #0f172a;
-        margin-bottom: 12px;
-        line-height: 1.3;
-    }
-
-    .sku-pills {
-        display: flex;
-        gap: 8px;
-    }
-
-    .sku-pill {
-        font-size: 11px;
-        padding: 6px 10px;
-        border-radius: 8px;
-        font-weight: 600;
-    }
-
-    .sku-pill.blue {
-        background: #dbeafe;
-        color: #1d4ed8;
-    }
-
-    .sku-pill.purple {
-        background: #f3e8ff;
-        color: #6b21a8;
-    }
-
-    /* Card Bottom Left (Pallet) */
-    .card-pallet {
-        position: absolute;
-        bottom: 40px;
-        left: 20px;
-        background: rgba(235, 243, 255, 0.95);
-        backdrop-filter: blur(8px);
-        border-radius: 16px;
-        padding: 16px 20px;
-        width: 220px;
-        color: #1e293b;
-        z-index: 12;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    }
-
-    .pallet-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 13px;
-        font-weight: 700;
-        color: #0f172a;
-        margin-bottom: 12px;
-    }
-
-    .toggle-switch {
-        width: 32px;
-        height: 18px;
-        background-color: #22c55e;
-        border-radius: 10px;
-        position: relative;
-    }
-
-    .toggle-switch::after {
-        content: '';
-        position: absolute;
-        right: 2px;
-        top: 2px;
-        width: 14px;
-        height: 14px;
-        background-color: white;
-        border-radius: 50%;
-    }
-
-    .pallet-loop {
-        height: 70px;
-        border: 3px solid #93c5fd;
-        border-radius: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 10px;
-        position: relative;
-    }
-
-    .pallet-icon {
-        width: 36px;
-        height: 36px;
-        background: #2563eb;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 18px;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    /* Card Bottom Right (Wave Shipment) */
-    .card-wave {
-        position: absolute;
-        bottom: 20px;
-        right: 0px;
-        background: rgba(235, 243, 255, 0.95);
-        backdrop-filter: blur(8px);
-        border-radius: 16px;
-        padding: 16px;
-        width: 260px;
-        color: #1e293b;
-        z-index: 12;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    }
-
-    .card-wave h4 {
-        font-size: 13px;
-        font-weight: 700;
-        color: #0f172a;
-        margin-bottom: 15px;
-    }
-
-    .wave-steps {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-    }
-
-    .wave-step {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
-        font-size: 10px;
-        color: #64748b;
-        font-weight: 500;
-    }
-
-    .wave-icon {
-        width: 28px;
-        height: 28px;
-        background: #dbeafe;
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #2563eb;
-        font-size: 12px;
-    }
-
-    /* Floating Floating Widgets */
-    .floating-chat {
-        position: fixed;
-        right: 20px;
-        bottom: 80px;
-        width: 44px;
-        height: 44px;
-        background: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        z-index: 100;
-        cursor: pointer;
-    }
-
-    .floating-cart {
-        position: fixed;
-        right: 20px;
-        bottom: 135px;
-        width: 44px;
-        height: 44px;
-        background: #f97316;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
-        z-index: 100;
-        cursor: pointer;
-    }
-
-    /* Sparkle Decor */
-    .sparkle {
-        position: absolute;
-        color: #facc15;
-        font-size: 24px;
-    }
-
-    @media (max-width: 1024px) {
-        .hero {
-            grid-template-columns: 1fr;
-        }
-        .hero-graphics {
-            display: none;
-        }
-    }
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JFWMS — WMS Prototype</title>
+<style>
+:root{
+  --blue:#246bfe; --blue2:#4d8cff; --text:#182235; --muted:#697386;
+  --bg:#f6f8fc; --line:#e8edf5; --white:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Arial,sans-serif;color:var(--text);background:#fff;line-height:1.6}
+a{text-decoration:none;color:inherit}
+.container{width:min(1180px,92%);margin:auto}
+header{height:72px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);
+ position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line)}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:25px;font-weight:800;letter-spacing:-1px}.logo span{color:var(--blue)}
+nav{display:flex;gap:28px;font-size:14px;color:#4c5668}nav a:hover{color:var(--blue)}
+.actions{display:flex;align-items:center;gap:12px}.lang{font-size:14px}.login{color:#4c5668}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:8px;
+ background:var(--blue);color:#fff;font-weight:700;font-size:14px;border:0;cursor:pointer}
+.btn.light{background:#edf3ff;color:var(--blue)}
+.hero{min-height:620px;background:radial-gradient(circle at 75% 25%,#dfeaff 0,transparent 34%),
+ linear-gradient(135deg,#f7faff,#eef4ff);display:flex;align-items:center}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:55px;align-items:center}
+.eyebrow{display:inline-block;padding:7px 12px;border-radius:20px;background:#e7efff;color:var(--blue);
+ font-size:13px;font-weight:700;margin-bottom:20px}
+h1{font-size:54px;line-height:1.12;letter-spacing:-2px;margin-bottom:22px}
+h1 span{color:var(--blue)}.hero p{font-size:18px;color:var(--muted);max-width:600px;margin-bottom:30px}
+.hero-buttons{display:flex;gap:12px}
+.dashboard{height:365px;border-radius:20px;background:#fff;box-shadow:0 25px 70px rgba(34,72,140,.16);
+ border:1px solid #e9eef7;padding:18px;transform:rotate(1deg)}
+.dash-top{height:35px;display:flex;gap:7px;align-items:center}.dot{width:8px;height:8px;border-radius:50%;background:#d6deeb}
+.dash-body{display:grid;grid-template-columns:120px 1fr;gap:14px;height:290px}
+.sidebar{background:#f4f7fc;border-radius:10px;padding:12px}.side-line{height:10px;background:#dfe7f3;border-radius:5px;margin-bottom:14px}
+.panel{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat,.chart{background:#f7f9fc;border-radius:10px;padding:13px}.stat{height:75px}
+.stat b{display:block;font-size:20px;color:var(--blue)}.chart{grid-column:span 3;height:190px;position:relative;overflow:hidden}
+.chart:after{content:"";position:absolute;left:20px;right:20px;bottom:30px;height:100px;
+ background:linear-gradient(135deg,transparent 0 10%,#8bb2ff 11% 13%,transparent 14% 27%,#4d8cff 28% 30%,transparent 31% 47%,#246bfe 48% 50%,transparent 51% 68%,#8bb2ff 69% 71%,transparent 72%);
+ opacity:.8}
+section{padding:90px 0}.gray{background:var(--bg)}
+.section-head{text-align:center;max-width:720px;margin:0 auto 50px}.section-head h2{font-size:36px;line-height:1.2;margin-bottom:12px}
+.section-head p{color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px;transition:.25s}
+.card:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(20,50,100,.08)}
+.icon{width:48px;height:48px;border-radius:12px;background:#edf3ff;color:var(--blue);display:grid;place-items:center;font-size:23px;margin-bottom:20px}
+.card h3{font-size:19px;margin-bottom:9px}.card p{color:var(--muted);font-size:14px}
+.scenarios{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.scenario{min-height:260px;border-radius:18px;padding:34px;color:#fff;position:relative;overflow:hidden}
+.scenario:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-55px;bottom:-70px;background:rgba(255,255,255,.12)}
+.scenario.blue{background:linear-gradient(135deg,#246bfe,#66a0ff)}.scenario.dark{background:linear-gradient(135deg,#1e293b,#42516b)}
+.scenario h3{font-size:25px;margin-bottom:12px}.scenario ul{list-style:none;opacity:.92}.scenario li{margin:8px 0}.scenario li:before{content:"✓";margin-right:9px}
+.features{display:grid;grid-template-columns:1fr 1.1fr;gap:70px;align-items:center}
+.feature-visual{background:linear-gradient(145deg,#edf4ff,#fff);border:1px solid var(--line);border-radius:20px;padding:30px}
+.feature-window{background:#fff;border-radius:14px;box-shadow:0 15px 35px rgba(30,60,100,.1);padding:20px}
+.row{height:14px;background:#edf1f7;border-radius:7px;margin:12px 0}.row.short{width:55%}.row.blue{background:#9fc0ff;width:78%}
+.feature-list{display:grid;gap:20px}.feature-item{display:flex;gap:16px}.feature-item .num{width:34px;height:34px;flex:none;border-radius:50%;background:#e9f0ff;color:var(--blue);display:grid;place-items:center;font-weight:700}
+.feature-item h3{font-size:18px}.feature-item p{font-size:14px;color:var(--muted)}
+.platforms{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;max-width:900px;margin:auto}
+.platform{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 20px;font-size:14px;font-weight:600;box-shadow:0 5px 15px rgba(30,50,90,.04)}
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.case{background:#fff;border-radius:15px;overflow:hidden;border:1px solid var(--line)}
+.case-img{height:150px;background:linear-gradient(135deg,#dbe8ff,#f3f7ff);display:grid;place-items:center;font-size:42px}
+.case-body{padding:23px}.case-body h3{margin-bottom:8px}.case-body p{color:var(--muted);font-size:14px}
+.cta{background:linear-gradient(120deg,#1e62ef,#4e8cff);color:#fff;border-radius:24px;padding:65px;text-align:center}
+.cta h2{font-size:38px;margin-bottom:12px}.cta p{opacity:.9;margin-bottom:25px}.cta .btn{background:#fff;color:var(--blue)}
+footer{background:#101827;color:#b9c2d1;padding:55px 0 25px}.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+footer h3{color:#fff;margin-bottom:15px}footer a{display:block;margin:8px 0;font-size:14px}footer a:hover{color:#fff}.copyright{border-top:1px solid #263143;margin-top:40px;padding-top:20px;font-size:13px}
+@media(max-width:850px){
+ nav,.login{display:none}.hero-grid,.features{grid-template-columns:1fr}.hero{padding:70px 0}.hero h1{font-size:40px}.cards,.cases{grid-template-columns:1fr}.scenarios{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.dashboard{transform:none}
+}
+@media(max-width:520px){.actions .lang{display:none}.hero-buttons{flex-direction:column}.hero-buttons .btn{width:100%}.cta{padding:40px 22px}.cta h2{font-size:30px}}
 </style>
+</head>
+<body>
 
-
-<!-- Header Navigation -->
 <header>
-    <div class="left-nav">
-        <div class="logo-container">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjcwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMjcwIDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMjcwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjMDA0QUM2Ii8+CjxwYXRoIGQ9Ik02My41IDMyLjVMNTEuNSAyNS41TDM5LjUgMzIuNVY0Ni41TDUxLjUgNTMuNUw2My41IDQ2LjVWMzIuNVoiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNC41IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik01MS41IDI1LjVWNTMuNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI0LjUiLz4KPHBhdGggZD0iTTUxLjUgMzkuNUwzOS41IDMyLjUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNC41Ii8+CjxwYXRoIGQ9Ik01MS41IDM5LjVMNjMuNSAzMi41IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjQuNSIvPgo8cGF0aCBkPSJNNTTEuNSA1My41TDM5LjUgNDYuNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI0LjUiLz4KPHBhdGggZD0iTTUxLjUgNTMuNUw2My41IDQ2LjUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNC41Ii8+CjxwYXRoIGQ9Ik00Ny41IDM2LjVINDQuNVY0OC41SCA0Ny41VjQ2LjVINDUuNVY0Mi41SDQ3LjVWNDAuNUg0NS41VjM4LjVINDcuNVYzNi41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTU1LjUgMzYuNUg1OC41VjM4LjVINTYuNVY0MC41SDU4LjVWNDIuNUg1Ni41VjQ4LjVINTUuNVYzNi41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTg3LjUgMzUuNUg5MS41VjQ2LjVDOTEuNSA1MC41IDg4LjUgNTMuNSA4My41IDUzLjVDNzguNSA1My41IDc1LjUgNTAuNSA3NS41IDQ2LjVWNDQuNUg4MS41VjQ2LjVDODEuNSA0OC41IDgyLjUgNDkuNSA4My41IDQ5LjVDODQuNSA0OS41IDg1LjUgNDguNSA4NS41IDQ2LjVWMzUuNUg4Ny41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTEwMi41IDM1LjVIMTE0LjVWMzkuNUgxMDcuNVY0Mi41SDExMy41VjQ2LjVIMTA3LjVWNTMuNUgxMDIuNVYzNS41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTEyMC41IDM1LjVIMTI2LjVMMTMwLjUgNDUuNUwxMzQuNSA1NS41TDEzOC41IDM1LjVIMTQ0LjVMMTUwLjUgNTMuNUgxNDUuNUwxNDIuNSA0NC41TDEzOC41IDM1LjVIMTM3LjVMMTMzLjUgNDYuNUwxMjkuNSAzNS41SDEyOC41TDEyNC41IDQ0LjVMMTIxLjUgNTMuNUgxMTYuNUwxMjAuNSAzNS41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTE1NS41IDM1LjVIMTYxLjVMMTY2LjUgNDYuNUwxNzEuNSAzNS41SDE3Ny41VjUzLjVIMTcyLjVWNDIuNUwxNjcuNSA1My41SDE2NS41TDE2MC41IDQyLjVWNTMuNUgxNTUuNVYzNS41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTE4NC41IDQ3LjVDMTg0LjUgNTEuNSAxODcuNSA1My41IDE5My41IDUzLjVDMTk5LjUgNTMuNSAyMDIuNSA1MS41IDIwMi41IDQ3LjVDMjAyLjUgNDIuNSAxOTYuNSA0MS41IDE5Mi41IDQwLjVDODguNSAzOS41IDE4NS41IDM4LjUgMTg1LjUgMzUuNUMxODUuNSAzMi41IDE4OC41IDMwLjUgMTkzLjUgMzAuNUMxOTguNSAzMC41IDIwMS41IDMyLjUgMjAxLjUgMzUuNUgxOTYuNUMxOTYuNSAzNC41IDE5NS41IDMzLjUgMTkzLjUgMzMuNUMxOTEuNSAzMy41IDE5MC41IDM0LjUgMTkwLjUgMzUuNUMxOTAuNSAzNi41IDE5MS41IDM3LjUgMTk1LjUgMzguNUMxOTkuNSAzOS41IDIwNy41IDQxLjUgMjA3LjUgNDcuNUMyMDcuNSA1Mi41IDIwMy41IDU2LjUgMTkzLjUgNTYuNUMxODMuNSA1Ni41IDE3OS41IDUyLjUgMTc5LjUgNDcuNUgxODQuNVoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPg==" alt="JFWMS Logo">
-        </div>
-        <nav class="nav-links">
-            <a href="#">Trang Chủ</a>
-            <a href="#">Trung tâm trợ giúp</a>
-            <a href="#">Về chúng tôi</a>
-        </nav>
-    </div>
-    
-    <div class="right-nav">
-        <div class="lang-select">🌐 VN</div>
-        <a href="#" class="btn-login">Đăng nhập</a>
-        <a href="#" class="btn-register">Đăng ký ngay</a>
-    </div>
+  <div class="container nav">
+    <a class="logo" href="#">JF<span>WMS</span></a>
+    <nav>
+      <a href="#home">Trang chủ</a>
+      <a href="#scenarios">Giải pháp</a>
+      <a href="#features">Tính năng</a>
+      <a href="#integrations">Tích hợp</a>
+      <a href="#cases">Khách hàng</a>
+      <a href="#about">Về chúng tôi</a>
+    </nav>
+    <div class="actions"><span class="lang">VN ▾</span><a class="login" href="#">Đăng nhập</a><a class="btn" href="#demo">Đăng ký</a></div>
+  </div>
 </header>
 
-<!-- Main Hero Section -->
-<main class="hero">
-    <div class="hero-content">
-        <h1>Hệ thống quản lý kho hàng nước ngoài đơn giản, dễ sử dụng</h1>
-        <p>JFWMS là hệ thống kho chuyên nghiệp trực thuộc Tập đoàn Dianyuanmi. Hệ thống bao phủ toàn diện các nghiệp vụ như gửi hàng lẻ, dự trữ & trung chuyển, và phân phối hàng tồn kho. Hệ thống thích ứng với nhiều kịch bản quản lý kinh doanh khác nhau, kết nối với các nền tảng thương mại điện tử lớn trên toàn cầu, liên kết với logistics toàn cầu, hỗ trợ kho hàng xuất hàng hiệu quả.</p>
-        <a href="#" class="btn-cta">
-            Trải nghiệm ngay ➔
-        </a>
+<main id="home">
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">WMS · Overseas Warehouse</span>
+      <h1>Quản lý kho <span>đơn giản</span><br>Hiệu quả hơn mỗi ngày</h1>
+      <p>Giải pháp quản lý kho toàn diện cho nhiều mô hình kinh doanh, giúp chuẩn hóa quy trình, kiểm soát tồn kho và nâng cao hiệu suất vận hành.</p>
+      <div class="hero-buttons"><a class="btn" href="#demo">Dùng thử miễn phí</a><a class="btn light" href="#features">Khám phá tính năng</a></div>
     </div>
-
-    <!-- Interactive Graphics Showcase -->
-    <div class="hero-graphics">
-        <!-- Sparkle Decor -->
-        <div class="sparkle" style="top: 10px; left: 10px;">✦</div>
-
-        <!-- Background Mockup Window -->
-        <div class="window-mockup">
-            <div class="window-header">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="mock-menu">
-                    <span>Customer</span>
-                    <span>Products</span>
-                    <span>Inbound</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Person Avatar Graphics -->
-        <div class="person-container">
-            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600" alt="Warehouse Manager" class="person-img">
-        </div>
-
-        <!-- SKU Card Floating Top Right -->
-        <div class="card-sku">
-            <h4>Efficient management of multiple SKUs</h4>
-            <div class="sku-pills">
-                <span class="sku-pill blue">Picking Path</span>
-                <span class="sku-pill purple">Reservoir Plan</span>
-            </div>
-        </div>
-
-        <!-- Pallet Distribution Card Floating Bottom Left -->
-        <div class="card-pallet">
-            <div class="pallet-header">
-                <span>Pallet Distribution</span>
-                <div class="toggle-switch"></div>
-            </div>
-            <div class="pallet-loop">
-                <span style="font-size: 16px;">👠</span>
-                <div class="pallet-icon">🏠</div>
-                <span style="font-size: 16px;">👗</span>
-            </div>
-        </div>
-
-        <!-- Wave Shipment Card Floating Bottom Right -->
-        <div class="card-wave">
-            <h4>Wave Shipment</h4>
-            <div class="wave-steps">
-                <div class="wave-step">
-                    <div class="wave-icon">🛒</div>
-                    <span>To Pick</span>
-                </div>
-                <div class="wave-step">
-                    <div class="wave-icon">📦</div>
-                    <span>To Pack</span>
-                </div>
-                <div class="wave-step">
-                    <div class="wave-icon">🏷️</div>
-                    <span>Packing</span>
-                </div>
-                <div class="wave-step">
-                    <div class="wave-icon">✅</div>
-                    <span>Ended</span>
-                </div>
-            </div>
-        </div>
+    <div class="dashboard" aria-label="WMS dashboard prototype">
+      <div class="dash-top"><i class="dot"></i><i class="dot"></i><i class="dot"></i></div>
+      <div class="dash-body"><aside class="sidebar"><div class="side-line"></div><div class="side-line"></div><div class="side-line"></div><div class="side-line"></div><div class="side-line"></div></aside>
+        <div class="panel"><div class="stat"><small>Đơn hàng</small><b>12,580</b></div><div class="stat"><small>Tồn kho</small><b>98.6%</b></div><div class="stat"><small>Xuất kho</small><b>8,240</b></div><div class="chart"><small>Warehouse Overview</small></div></div>
+      </div>
     </div>
+  </div>
+</section>
+
+<section class="gray">
+ <div class="container">
+  <div class="section-head"><h2>Tại sao chọn JFWMS?</h2><p>Một hệ thống WMS hướng tới sự đơn giản, khả năng mở rộng và vận hành hiệu quả.</p></div>
+  <div class="cards">
+   <div class="card"><div class="icon">◎</div><h3>Toàn cảnh nghiệp vụ</h3><p>Hỗ trợ nhiều mô hình kho và quy trình vận hành từ nhập, lưu trữ đến xuất hàng.</p></div>
+   <div class="card"><div class="icon">🌐</div><h3>Phù hợp thị trường địa phương</h3><p>Đa ngôn ngữ, thao tác trực quan và phù hợp với đội ngũ vận hành tại nhiều quốc gia.</p></div>
+   <div class="card"><div class="icon">⚡</div><h3>Đổi mới nhanh</h3><p>Liên tục cải tiến sản phẩm dựa trên nhu cầu thực tế của khách hàng.</p></div>
+   <div class="card"><div class="icon">✓</div><h3>Đáng tin cậy</h3><p>Đội ngũ chuyên nghiệp, hệ thống ổn định và chú trọng an toàn dữ liệu.</p></div>
+   <div class="card"><div class="icon">24</div><h3>Hỗ trợ 24/7</h3><p>Hỗ trợ khách hàng nhanh chóng trong quá trình triển khai và sử dụng.</p></div>
+   <div class="card"><div class="icon">↔</div><h3>Kết nối hệ sinh thái</h3><p>Kết nối ERP, sàn thương mại điện tử và các đơn vị vận chuyển phổ biến.</p></div>
+  </div>
+ </div>
+</section>
+
+<section id="scenarios">
+ <div class="container">
+  <div class="section-head"><h2>Giải pháp cho nhiều mô hình kho</h2><p>Thiết kế theo từng kịch bản nghiệp vụ để đội ngũ dễ triển khai và sử dụng.</p></div>
+  <div class="scenarios">
+   <div class="scenario blue"><h3>Kho fulfillment</h3><ul><li>Quản lý đơn hàng tập trung</li><li>Inbound / Outbound</li><li>Picking & Packing</li><li>Kiểm soát tồn kho theo thời gian thực</li></ul></div>
+   <div class="scenario dark"><h3>B2B / FBA</h3><ul><li>Điều chuyển và hoàn trả</li><li>Chuẩn hóa quy trình xuất hàng</li><li>Quản lý pallet / kiện hàng</li><li>Theo dõi trạng thái đơn hàng</li></ul></div>
+  </div>
+ </div>
+</section>
+
+<section class="gray" id="features">
+ <div class="container features">
+  <div class="feature-visual"><div class="feature-window"><b>Inventory Management</b><div class="row blue"></div><div class="row"></div><div class="row short"></div><div class="row"></div><div class="row blue"></div><div class="row"></div></div></div>
+  <div>
+   <div class="section-head" style="text-align:left;margin:0 0 30px"><h2>Tăng hiệu suất vận hành kho</h2><p>Các module tập trung vào những nghiệp vụ cốt lõi của kho.</p></div>
+   <div class="feature-list">
+    <div class="feature-item"><div class="num">1</div><div><h3>Quản lý tồn kho</h3><p>Khởi tạo tồn kho, quét mã nhập/xuất và truy xuất lịch sử biến động.</p></div></div>
+    <div class="feature-item"><div class="num">2</div><div><h3>Fulfillment & Picking</h3><p>Tối ưu đường đi lấy hàng, hỗ trợ wave picking và xử lý không giấy.</p></div></div>
+    <div class="feature-item"><div class="num">3</div><div><h3>Quản lý trả hàng</h3><p>Tiếp nhận, kiểm tra và đưa hàng hoàn về kho theo quy trình.</p></div></div>
+    <div class="feature-item"><div class="num">4</div><div><h3>PDA</h3><p>Thao tác di động và đồng bộ dữ liệu theo thời gian thực.</p></div></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="integrations">
+ <div class="container">
+  <div class="section-head"><h2>Kết nối các nền tảng phổ biến</h2><p>Đơn giản hóa tích hợp và quy trình giao hàng.</p></div>
+  <div class="platforms">
+   <div class="platform">Temu</div><div class="platform">TikTok Shop</div><div class="platform">SHEIN</div><div class="platform">Amazon</div><div class="platform">Walmart</div><div class="platform">eBay</div><div class="platform">Shopee</div><div class="platform">Shopify</div><div class="platform">Lazada</div><div class="platform">Dianxiaomi</div><div class="platform">BigSeller</div><div class="platform">UpSeller</div><div class="platform">4Seller</div><div class="platform">ShipStation</div><div class="platform">FedEx</div><div class="platform">USPS</div><div class="platform">17TRACK</div><div class="platform">API</div>
+  </div>
+ </div>
+</section>
+
+<section class="gray" id="cases">
+ <div class="container">
+  <div class="section-head"><h2>Khách hàng đồng hành cùng JFWMS</h2><p>Prototype case-study cards — thay bằng dữ liệu và hình ảnh chính thức khi triển khai.</p></div>
+  <div class="cases">
+   <article class="case"><div class="case-img">📦</div><div class="case-body"><h3>Overseas Warehouse</h3><p>Tối ưu quy trình nhập xuất và kiểm soát tồn kho.</p></div></article>
+   <article class="case"><div class="case-img">🚚</div><div class="case-body"><h3>Fulfillment Center</h3><p>Rút ngắn thời gian xử lý đơn và nâng cao độ chính xác.</p></div></article>
+   <article class="case"><div class="case-img">🌎</div><div class="case-body"><h3>Global Warehouse</h3><p>Hỗ trợ vận hành kho tại nhiều thị trường và mô hình khác nhau.</p></div></article>
+  </div>
+ </div>
+</section>
+
+<section id="demo">
+ <div class="container"><div class="cta"><h2>Sẵn sàng tối ưu vận hành kho?</h2><p>Trải nghiệm một hệ thống WMS đơn giản, dễ sử dụng và phù hợp với nhiều nghiệp vụ.</p><a class="btn" href="mailto:service-jfwms@dianxiaomi.com">Đăng ký trải nghiệm</a></div></div>
+</section>
 </main>
 
-<!-- Floating Action Buttons -->
-<div class="floating-cart">🛒</div>
-<div class="floating-chat">💬</div>
+<footer id="about">
+ <div class="container">
+  <div class="footer-grid">
+   <div><div class="logo">JF<span>WMS</span></div><p style="margin-top:15px">Hệ thống quản lý kho cho nhiều mô hình kinh doanh và thị trường.</p></div>
+   <div><h3>Giải pháp</h3><a href="#scenarios">Fulfillment</a><a href="#scenarios">B2B / FBA</a><a href="#features">Quản lý tồn kho</a><a href="#features">PDA</a></div>
+   <div><h3>Hỗ trợ</h3><a href="#">Help Center</a><a href="#">Tin tức</a><a href="#">Về chúng tôi</a><a href="#">Chính sách dữ liệu</a></div>
+   <div><h3>Liên hệ</h3><a href="tel:0388251602">0388251602</a><a href="tel:0388251602">Ms Rius</a><a href="#demo">Đăng ký Demo</a></div>
+  </div>
+  <div class="copyright">© 2026 JFWMS Prototype · Bản prototype HTML/CSS/JS tham khảo bố cục website hiện tại.</div>
+ </div>
+</footer>
+</body>
+</html>
