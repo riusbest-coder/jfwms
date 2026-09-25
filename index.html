@@ -1,157 +1,29 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Web Cá Nhân</title>
-    <style>
-        /* Cấu hình giao diện cơ bản */
-        :root {
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-color: #1e293b;
-            --primary-color: #2563eb;
-            --border-color: #e2e8f0;
-        }
-
-        [data-theme="dark"] {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-color: #f8fafc;
-            --primary-color: #3b82f6;
-            --border-color: #334155;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.3s, color 0.3s;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .toggle-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: opacity 0.2s;
-        }
-
-        .toggle-btn:hover {
-            opacity: 0.9;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 40px 0;
-        }
-
-        .hero h1 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border-color);
-            opacity: 0.8;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JFWMS Logo</title>
+  <style>
+    /* CSS tùy chỉnh cho Logo JFWMS */
+    .p_logo {
+      max-width: 100%;       /* Tự động co giãn theo màn hình */
+      height: auto;          /* Giữ đúng tỷ lệ ảnh */
+      display: block;        /* Căn chỉnh dễ dàng hơn */
+      margin: 20px auto;     /* Căn giữa hình ảnh */
+      object-fit: contain;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Thanh tiêu đề & Nút chuyển giao diện -->
-        <header>
-            <h2>My GitHub Site</h2>
-            <button class="toggle-btn" onclick="toggleTheme()">🌙 Chế độ tối</button>
-        </header>
+  <!-- Thẻ Image hiển thị Logo JFWMS -->
+  <img 
+    src="data:image/png;base64,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" 
+    class="p_logo" 
+    alt="JFWMS – Hệ thống quản lý kho hàng ở nước ngoài miễn phí, dịch vụ tận tâm, dễ dàng sử dụng!" 
+    loading="lazy"
+  >
 
-        <!-- Phần giới thiệu chính -->
-        <section class="hero">
-            <h1>Xin chào! 👋</h1>
-            <p>Chào mừng bạn đến với trang web cá nhân của tôi được lưu trữ hoàn toàn miễn phí trên <strong>GitHub Pages</strong>.</p>
-        </section>
-
-        <!-- Danh mục thông tin -->
-        <div class="card-grid">
-            <div class="card">
-                <h3>🚀 Mục tiêu</h3>
-                <p>Học hỏi và khám phá cách tự xây dựng trang web, ứng dụng web với sự hỗ trợ của các công cụ AI hiện đại.</p>
-            </div>
-            <div class="card">
-                <h3>💡 Dự án</h3>
-                <p>Nơi lưu trữ và chia sẻ những sản phẩm, bài viết hoặc ý tưởng sáng tạo cá nhân.</p>
-            </div>
-            <div class="card">
-                <h3>📬 Liên hệ</h3>
-                <p>Bạn có thể kết nối với tôi qua GitHub hoặc các kênh mạng xã hội.</p>
-            </div>
-        </div>
-
-        <!-- Chân trang -->
-        <footer>
-            <p>© <span id="year"></span> - Được tạo với HTML, CSS và JS</p>
-        </footer>
-    </div>
-
-    <!-- Đoạn JavaScript xử lý tính năng -->
-    <script>
-        // Tự động cập nhật năm hiện tại ở chân trang
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Xử lý chuyển đổi giao diện Sáng / Tối
-        function toggleTheme() {
-            const body = document.body;
-            const btn = document.querySelector('.toggle-btn');
-            
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                btn.textContent = '🌙 Chế độ tối';
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                btn.textContent = '☀️ Chế độ sáng';
-            }
-        }
-    </script>
 </body>
 </html>
