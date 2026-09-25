@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Web Cá Nhân</title>
+    <style>
+        /* Cấu hình giao diện cơ bản */
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --primary-color: #2563eb;
+            --border-color: #e2e8f0;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --primary-color: #3b82f6;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .toggle-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+
+        .toggle-btn:hover {
+            opacity: 0.9;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .hero h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Thanh tiêu đề & Nút chuyển giao diện -->
+        <header>
+            <h2>My GitHub Site</h2>
+            <button class="toggle-btn" onclick="toggleTheme()">🌙 Chế độ tối</button>
+        </header>
+
+        <!-- Phần giới thiệu chính -->
+        <section class="hero">
+            <h1>Xin chào! 👋</h1>
+            <p>Chào mừng bạn đến với trang web cá nhân của tôi được lưu trữ hoàn toàn miễn phí trên <strong>GitHub Pages</strong>.</p>
+        </section>
+
+        <!-- Danh mục thông tin -->
+        <div class="card-grid">
+            <div class="card">
+                <h3>🚀 Mục tiêu</h3>
+                <p>Học hỏi và khám phá cách tự xây dựng trang web, ứng dụng web với sự hỗ trợ của các công cụ AI hiện đại.</p>
+            </div>
+            <div class="card">
+                <h3>💡 Dự án</h3>
+                <p>Nơi lưu trữ và chia sẻ những sản phẩm, bài viết hoặc ý tưởng sáng tạo cá nhân.</p>
+            </div>
+            <div class="card">
+                <h3>📬 Liên hệ</h3>
+                <p>Bạn có thể kết nối với tôi qua GitHub hoặc các kênh mạng xã hội.</p>
+            </div>
+        </div>
+
+        <!-- Chân trang -->
+        <footer>
+            <p>© <span id="year"></span> - Được tạo với HTML, CSS và JS</p>
+        </footer>
+    </div>
+
+    <!-- Đoạn JavaScript xử lý tính năng -->
+    <script>
+        // Tự động cập nhật năm hiện tại ở chân trang
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Xử lý chuyển đổi giao diện Sáng / Tối
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.querySelector('.toggle-btn');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.textContent = '🌙 Chế độ tối';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.textContent = '☀️ Chế độ sáng';
+            }
+        }
+    </script>
+</body>
+</html>
