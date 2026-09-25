@@ -1,29 +1,256 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JFWMS Logo</title>
-  <style>
-    /* CSS tùy chỉnh cho Logo JFWMS */
-    .p_logo {
-      max-width: 100%;       /* Tự động co giãn theo màn hình */
-      height: auto;          /* Giữ đúng tỷ lệ ảnh */
-      display: block;        /* Căn chỉnh dễ dàng hơn */
-      margin: 20px auto;     /* Căn giữa hình ảnh */
-      object-fit: contain;
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
     }
-  </style>
-</head>
-<body>
 
-  <!-- Thẻ Image hiển thị Logo JFWMS -->
-  <img 
-    src="data:image/png;base64,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" 
-    class="p_logo" 
-    alt="JFWMS – Hệ thống quản lý kho hàng ở nước ngoài miễn phí, dịch vụ tận tâm, dễ dàng sử dụng!" 
-    loading="lazy"
-  >
+    body {
+        background-color: var(--light-bg);
+        color: var(--text-main);
+        line-height: 1.6;
+    }
 
-</body>
-</html>
+    /* Header / Navbar */
+    header {
+        background-color: #004ac6;
+        padding: 12px 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .logo-container img {
+        height: 48px;
+        display: block;
+        object-fit: contain;
+    }
+
+    nav a {
+        color: #ffffff;
+        text-decoration: none;
+        margin-left: 20px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: opacity 0.2s;
+    }
+
+    nav a:hover {
+        opacity: 0.8;
+    }
+
+    .btn-header {
+        background-color: #ffffff;
+        color: #004ac6;
+        padding: 8px 18px;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        margin-left: 15px;
+        transition: background 0.2s;
+    }
+
+    .btn-header:hover {
+        background-color: #e6effd;
+        opacity: 1;
+    }
+
+    /* Hero Section */
+    .hero {
+        background: linear-gradient(135deg, #004ac6 0%, #0747a6 100%);
+        color: var(--white);
+        padding: 80px 5% 100px;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .hero p {
+        font-size: 1.25rem;
+        max-width: 650px;
+        margin: 0 auto 30px;
+        opacity: 0.9;
+        font-weight: 300;
+    }
+
+    .cta-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .btn-primary {
+        background-color: var(--accent-green);
+        color: var(--white);
+        padding: 12px 28px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        box-shadow: 0 4px 12px rgba(54, 179, 126, 0.3);
+        transition: transform 0.2s, background 0.2s;
+    }
+
+    .btn-primary:hover {
+        background-color: #2e9d6e;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background-color: rgba(255, 255, 255, 0.15);
+        color: var(--white);
+        padding: 12px 28px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        backdrop-filter: blur(5px);
+        transition: background 0.2s;
+    }
+
+    .btn-secondary:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Main Content Container */
+    .container {
+        max-width: 1100px;
+        margin: -50px auto 60px;
+        padding: 0 20px;
+    }
+
+    /* Feature Cards Grid */
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    .card {
+        background: var(--white);
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        border: 1px solid var(--border-color);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    .card-icon {
+        width: 50px;
+        height: 50px;
+        background-color: #e6effd;
+        color: var(--primary-blue);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+        color: var(--text-main);
+    }
+
+    .card p {
+        color: var(--text-sub);
+        font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+        background-color: var(--white);
+        border-top: 1px solid var(--border-color);
+        padding: 30px 5%;
+        text-align: center;
+        color: var(--text-sub);
+        font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2rem;
+        }
+        .hero p {
+            font-size: 1rem;
+        }
+        .cta-buttons {
+            flex-direction: column;
+        }
+        nav {
+            display: none;
+        }
+    }
+</style>
+
+
+<!-- Thanh Điều Hướng Header -->
+<header>
+    <div class="logo-container">
+        <!-- Nhúng logo JFWMS dạng SVG Base64 trực tiếp -->
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjcwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMjcwIDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMjcwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjMDA0QUM2Ii8+CjxwYXRoIGQ9Ik02My41IDMyLjVMNTEuNSAyNS41TDM5LjUgMzIuNVY0Ni41TDUxLjUgNTMuNUw2My41IDQ2LjVWMzIuNVoiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNC41IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik01MS41IDI1LjVWNTMuNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI0LjUiLz4KPHBhdGggZD0iTTUxLjUgMzkuNUwzOS41IDMyLjUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNC41Ii8+CjxwYXRoIGQ9Ik01MS41IDM5LjVMNjMuNSAzMi41IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjQuNSIvPgo8cGF0aCBkPSJNNTTEuNSA1My41TDM5LjUgNDYuNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI0LjUiLz4KPHBhdGggZD0iTTUxLjUgNTMuNUw2My41IDQ2LjUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNC41Ii8+CjxwYXRoIGQ9Ik00Ny41IDM2LjVINDQuNVY0OC41SCA0Ny41VjQ2LjVINDUuNVY0Mi41SDQ3LjVWNDAuNUg0NS41VjM4LjVINDcuNVYzNi41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTU1LjUgMzYuNUg1OC41VjM4LjVINTYuNVY0MC41SDU4LjVWNDIuNUg1Ni41VjQ4LjVINTUuNVYzNi41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTg3LjUgMzUuNUg5MS41VjQ2LjVDOTEuNSA1MC41IDg4LjUgNTMuNSA4My41IDUzLjVDNzguNSA1My41IDc1LjUgNTAuNSA3NS41IDQ2LjVWNDQuNUg4MS41VjQ2LjVDODEuNSA0OC41IDgyLjUgNDkuNSA4My41IDQ5LjVDODQuNSA0OS41IDg1LjUgNDguNSA4NS41IDQ2LjVWMzUuNUg4Ny41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTEwMi41IDM1LjVIMTE0LjVWMzkuNUgxMDcuNVY0Mi41SDExMy41VjQ2LjVIMTA3LjVWNTMuNUgxMDIuNVYzNS41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTEyMC41IDM1LjVIMTI2LjVMMTMwLjUgNDUuNUwxMzQuNSA1NS41TDEzOC41IDM1LjVIMTQ0LjVMMTUwLjUgNTMuNUgxNDUuNUwxNDIuNSA0NC41TDEzOC41IDM1LjVIMTM3LjVMMTMzLjUgNDYuNUwxMjkuNSAzNS41SDEyOC41TDEyNC41IDQ0LjVMMTIxLjUgNTMuNUgxMTYuNUwxMjAuNSAzNS41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTE1NS41IDM1LjVIMTYxLjVMMTY2LjUgNDYuNUwxNzEuNSAzNS41SDE3Ny41VjUzLjVIMTcyLjVWNDIuNUwxNjcuNSA1My41SDE2NS41TDE2MC41IDQyLjVWNTMuNUgxNTUuNVYzNS41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTE4NC41IDQ3LjVDMTg0LjUgNTEuNSAxODcuNSA1My41IDE5My41IDUzLjVDMTk5LjUgNTMuNSAyMDIuNSA1MS41IDIwMi41IDQ3LjVDMjAyLjUgNDIuNSAxOTYuNSA0MS41IDE5Mi41IDQwLjVDODguNSAzOS41IDE4NS41IDM4LjUgMTg1LjUgMzUuNUMxODUuNSAzMi41IDE4OC41IDMwLjUgMTkzLjUgMzAuNUMxOTguNSAzMC41IDIwMS41IDMyLjUgMjAxLjUgMzUuNUgxOTYuNUMxOTYuNSAzNC41IDE5NS41IDMzLjUgMTkzLjUgMzMuNUMxOTEuNSAzMy41IDE5MC41IDM0LjUgMTkwLjUgMzUuNUMxOTAuNSAzNi41IDE5MS41IDM3LjUgMTk1LjUgMzguNUMxOTkuNSAzOS41IDIwNy41IDQxLjUgMjA3LjUgNDcuNUMyMDcuNSA1Mi41IDIwMy41IDU2LjUgMTkzLjUgNTYuNUMxODMuNSA1Ni41IDE3OS41IDUyLjUgMTc5LjUgNDcuNUgxODQuNVoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPg==" alt="JFWMS Logo">
+    </div>
+    <nav>
+        <a href="#">Trang chủ</a>
+        <a href="#">Tính năng</a>
+        <a href="#">Bảng giá</a>
+        <a href="#">Hỗ trợ</a>
+        <a href="#" class="btn-header">Đăng nhập</a>
+    </nav>
+</header>
+
+<!-- Banner Chào Mừng Hero -->
+<section class="hero">
+    <h1>Xin chào khách hàng JFWMS! 👋</h1>
+    <p>Hệ thống quản lý kho đơn giản, tối ưu và dễ dàng sử dụng cho mọi mô hình kinh doanh.</p>
+    <div class="cta-buttons">
+        <a href="#" class="btn-primary">Bắt đầu miễn phí</a>
+        <a href="#" class="btn-secondary">Khám phá tính năng</a>
+    </div>
+</section>
+
+<!-- Các Tính Năng Nổi Bật -->
+<div class="container">
+    <div class="features-grid">
+        
+        <div class="card">
+            <div class="card-icon">📦</div>
+            <h3>Quản Lý Tồn Kho</h3>
+            <p>Theo dõi chính xác số lượng xuất - nhập - tồn theo thời gian thực. Cảnh báo tự động khi hàng tồn đạt mức tối thiểu.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>Đơn Giản & Dễ Dùng</h3>
+            <p>Giao diện thân thiện, được thiết kế tối giản giúp nhân viên kho thao tác nhanh chóng mà không cần qua đào tạo phức tạp.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>Báo Cáo Trực Quan</h3>
+            <p>Thống kê chi tiết hàng tồn, tốc độ bán hàng và doanh thu kho hàng qua các biểu đồ trực quan, rõ ràng.</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>© 2026 JFWMS - Hệ thống quản lý kho hàng chuyên nghiệp & đơn giản.</p>
+</footer>
