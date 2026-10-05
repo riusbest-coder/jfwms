@@ -1,1241 +1,1097 @@
 <!DOCTYPE html>
-<html lang="vi" class="dark">
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giftcode Command Studio & Simulator v3.0</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts Inter & JetBrains Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        cyber: {
-                            bg: '#090d16',
-                            card: 'rgba(15, 23, 42, 0.75)',
-                            border: 'rgba(51, 65, 85, 0.6)',
-                            neonBlue: '#00f0ff',
-                            neonPurple: '#a855f7',
-                            neonGreen: '#10b981',
-                            neonPink: '#ec4899',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    animation: {
-                        'pulse-glow': 'pulseGlow 2s infinite alternate',
-                        'scanline': 'scanline 8s linear infinite',
-                        'float': 'float 3s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        pulseGlow: {
-                            '0%': { boxShadow: '0 0 10px rgba(0, 240, 255, 0.2)' },
-                            '100%': { boxShadow: '0 0 25px rgba(0, 240, 255, 0.6)' }
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-6px)' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JFWMS — Hệ Thống Quản Lý Kho Hàng Toàn Diện</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#246bfe; 
+  --blue-hover:#1d59d6;
+  --blue-light:#edf3ff;
+  --blue-soft:#e7efff;
+  --text:#111827; 
+  --muted:#6b7280;
+  --bg:#f8fafc; 
+  --line:#e5e7eb; 
+  --white:#ffffff;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 25px -3px rgba(36, 107, 254, 0.12), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
 
-    <style>
-        /* Custom scrollbars */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #090d16;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #334155;
-        }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color:var(--text);
+  background:var(--white);
+  line-height:1.6;
+  -webkit-font-smoothing: antialiased;
+}
 
-        /* Glassmorphism Effect */
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
+a{text-decoration:none;color:inherit}
+.container{width:min(1200px,92%);margin:auto}
 
-        .glass-card {
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
+/* Header */
+header{
+  height:76px;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  position:sticky;
+  top:0;
+  z-index:100;
+  border-bottom:1px solid var(--line);
+}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center}
+.logo img{height:36px;display:block}
+nav{display:flex;gap:32px;font-size:15px;font-weight:600;color:#374151}
+nav a{transition:color .2s}
+nav a:hover{color:var(--blue)}
 
-        /* Cyberpunk glowing highlights */
-        .neon-border-blue:focus-within {
-            border-color: #00f0ff;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-        }
+.actions{display:flex;align-items:center;gap:16px}
+.lang{font-size:14px;font-weight:600;color:#4b5563;cursor:pointer;padding:6px 10px;border-radius:6px;background:#f3f4f6}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 24px;
+  border-radius:10px;
+  background:var(--blue);
+  color:#fff;
+  font-weight:700;
+  font-size:14.5px;
+  border:0;
+  cursor:pointer;
+  transition:all .2s ease;
+  box-shadow: 0 4px 12px rgba(36,107,254,.25);
+}
+.btn:hover{background:var(--blue-hover);transform:translateY(-1px);box-shadow: 0 6px 16px rgba(36,107,254,.35)}
+.btn.light{background:var(--blue-light);color:var(--blue);box-shadow:none}
+.btn.light:hover{background:#e1ecff;color:var(--blue-hover)}
 
-        .glow-text-cyan {
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-        }
+/* Mobile Menu Toggle */
+.menu-toggle{display:none}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;z-index:101}
+.hamburger span{width:22px;height:2.5px;background:var(--text);border-radius:2px;transition:.3s}
 
-        .glow-text-purple {
-            text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
-        }
+/* Hero Section */
+.hero{
+  padding: 60px 0 90px;
+  background:radial-gradient(circle at 80% 20%, #eef4ff 0, transparent 40%),
+             linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  overflow: hidden;
+}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 14px;
+  border-radius:30px;
+  background:var(--blue-soft);
+  color:var(--blue);
+  font-size:13.5px;
+  font-weight:700;
+  margin-bottom:20px;
+  border: 1px solid rgba(36,107,254,0.15);
+}
+h1{font-size:52px;line-height:1.15;letter-spacing:-1.5px;margin-bottom:20px;font-weight:800;color:#0f172a}
+h1 span{color:var(--blue)}
+.hero p{font-size:18px;color:var(--muted);max-width:560px;margin-bottom:32px;line-height:1.6}
+.hero-buttons{display:flex;gap:14px}
 
-        /* Terminal Cursor */
-        .terminal-cursor::after {
-            content: '█';
-            animation: blink 1s step-end infinite;
-            color: #00f0ff;
-            margin-left: 2px;
-        }
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-    </style>
+/* Dashboard Mockup */
+.dashboard{
+  border-radius:20px;
+  background:#fff;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0,0,0,0.05);
+  border:1px solid #e2e8f0;
+  padding:18px;
+  transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
+  transition: transform .4s ease;
+}
+.dashboard:hover{transform: perspective(1000px) rotateY(0deg) rotateX(0deg)}
+.dash-top{height:28px;display:flex;gap:6px;align-items:center;margin-bottom:12px;border-bottom:1px solid #f1f5f9;padding-bottom:10px}
+.dot{width:10px;height:10px;border-radius:50%;background:#cbd5e1}
+.dot:nth-child(1){background:#f87171}
+.dot:nth-child(2){background:#fbbf24}
+.dot:nth-child(3){background:#4ade80}
+
+.dash-body{display:grid;grid-template-columns:110px 1fr;gap:14px}
+.sidebar{background:#f8fafc;border-radius:10px;padding:12px;border:1px solid #f1f5f9}
+.side-line{height:8px;background:#e2e8f0;border-radius:4px;margin-bottom:12px}
+.side-line:nth-child(1){width:70%;background:var(--blue);opacity:.7}
+
+.panel{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat,.chart{background:#f8fafc;border-radius:12px;padding:12px;border:1px solid #f1f5f9}
+.stat{height:96px;display:flex;flex-direction:column;justify-content:space-between}
+.stat-top{display:flex;align-items:center;justify-content:space-between}
+.stat-top small{color:var(--muted);font-size:12px;font-weight:600}
+.trend{font-size:11px;font-weight:700;padding:2px 6px;border-radius:20px}
+.trend.up{color:#15803d;background:#dcfce7}
+.trend.down{color:#b91c1c;background:#fee2e2}
+.stat b{display:block;font-size:20px;color:var(--text);font-weight:800}
+.spark{width:100%;height:22px;display:block}
+.spark polyline{fill:none;stroke:var(--blue);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.spark.down polyline{stroke:#ef4444}
+.chart{grid-column:span 3;height:175px;position:relative;overflow:hidden}
+.chart small{font-weight:700;color:#475569;font-size:12px}
+.chart svg{position:absolute;left:0;right:0;bottom:0;width:100%;height:135px}
+
+/* Sections General */
+section{padding:90px 0}
+.gray{background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.section-head{text-align:center;max-width:720px;margin:0 auto 56px}
+.section-head h2{font-size:36px;line-height:1.25;margin-bottom:12px;font-weight:800;letter-spacing:-0.5px}
+.section-head p{color:var(--muted);font-size:17px}
+
+/* Cards Grid */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:32px 28px;
+  transition:all .3s ease;
+  box-shadow: var(--shadow-sm);
+}
+.card:hover{transform:translateY(-4px);box-shadow: var(--shadow-lg);border-color:rgba(36,107,254,0.3)}
+.icon{width:52px;height:52px;border-radius:14px;background:var(--blue-light);color:var(--blue);display:grid;place-items:center;font-size:24px;margin-bottom:20px;font-weight:bold}
+.card h3{font-size:19px;margin-bottom:10px;font-weight:700}
+.card p{color:var(--muted);font-size:14.5px;line-height:1.6}
+
+/* Scenarios Section */
+.scenarios{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.scenario{
+  min-height:260px;
+  border-radius:20px;
+  padding:36px;
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+  box-shadow: var(--shadow-md);
+}
+.scenario:after{
+  content:"";
+  position:absolute;
+  width:200px;
+  height:200px;
+  border-radius:50%;
+  right:-60px;
+  bottom:-70px;
+  background:rgba(255,255,255,.1);
+  pointer-events: none;
+}
+.scenario.blue{background:linear-gradient(135deg, #246bfe 0%, #1e40af 100%)}
+.scenario.dark{background:linear-gradient(135deg, #1e293b 0%, #0f172a 100%)}
+.scenario h3{font-size:24px;margin-bottom:16px;font-weight:800}
+.scenario ul{list-style:none}
+.scenario li{margin:10px 0;font-size:15.5px;display:flex;align-items:center;gap:10px;opacity:.95}
+.scenario li:before{
+  content:"✓";
+  display:inline-grid;
+  place-items:center;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* Features Layout */
+.features{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:start}
+.feature-visual{
+  background:linear-gradient(145deg, #f0f6ff, #ffffff);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:24px;
+  position:sticky;
+  top:100px;
+  box-shadow: var(--shadow-md);
+}
+.visual-frame{position:relative}
+.app-window{
+  position:relative;
+  z-index:1;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 20px 40px rgba(15,23,42,.12);
+  border:1px solid #e2e8f0;
+  overflow:hidden;
+}
+.app-window .app-bar{height:36px;background:#f8fafc;display:flex;align-items:center;gap:6px;padding:0 14px;border-bottom:1px solid var(--line)}
+.app-window .app-bar i{width:10px;height:10px;border-radius:50%;background:#cbd5e1;display:block}
+.app-window svg{width:100%;height:auto;display:block}
+
+.live-badge{
+  position:absolute;
+  z-index:2;
+  top:-12px;
+  right:16px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:30px;
+  padding:6px 14px;
+  font-size:12.5px;
+  font-weight:700;
+  color:var(--text);
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.live-badge .dot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.2)}
+.feature-caption{margin-top:16px;font-size:13.5px;color:var(--muted);text-align:center;font-weight:600}
+
+.feature-list{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.feature-item{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  transition:all .25s ease;
+}
+.feature-item:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:rgba(36,107,254,0.3)}
+.feature-illus{
+  width:100%;
+  height:100px;
+  border-radius:10px;
+  background:linear-gradient(135deg, #f1f5f9, #f8fafc);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.feature-illus svg{width:100%;height:100%}
+.feature-text{display:flex;gap:12px;align-items:flex-start}
+.feature-item .num{
+  width:28px;
+  height:28px;
+  flex:none;
+  border-radius:50%;
+  background:var(--blue-soft);
+  color:var(--blue);
+  display:grid;
+  place-items:center;
+  font-weight:800;
+  font-size:13px;
+}
+.feature-item h3{font-size:15.5px;margin-bottom:4px;font-weight:700}
+.feature-item p{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* Platforms Grid */
+.platforms{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;max-width:1080px;margin:auto}
+.platform{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:20px 12px;
+  font-size:15px;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:76px;
+  transition:all .2s ease;
+  box-shadow: var(--shadow-sm);
+  color:#33415c;
+}
+.platform:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:rgba(36,107,254,0.3)}
+
+/* Call To Action */
+.cta{
+  background:linear-gradient(135deg, #1e40af 0%, #246bfe 100%);
+  color:#fff;
+  border-radius:28px;
+  padding:70px 40px;
+  text-align:center;
+  box-shadow: var(--shadow-lg);
+}
+.cta h2{font-size:40px;margin-bottom:16px;font-weight:800;letter-spacing:-0.5px}
+.cta p{opacity:.9;margin-bottom:32px;font-size:18px;max-width:600px;margin-left:auto;margin-right:auto}
+.cta .btn{background:#fff;color:var(--blue);box-shadow:0 4px 14px rgba(0,0,0,0.1)}
+.cta .btn:hover{background:#f8fafc;color:var(--blue-hover)}
+
+/* Footer */
+footer{background:#0f172a;color:#94a3b8;padding:64px 0 32px}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+footer .logo{color:#fff}
+footer h3{color:#fff;margin-bottom:18px;font-size:16px;font-weight:700}
+footer a{display:block;margin:10px 0;font-size:14.5px;transition:color .2s}
+footer a:hover{color:#fff}
+.copyright{border-top:1px solid #1e293b;margin-top:48px;padding-top:24px;font-size:13.5px;text-align:center}
+
+/* Responsive Styles */
+@media(max-width:1024px){
+  .hero-grid,.features{grid-template-columns:1fr;gap:40px}
+  .feature-visual{position:static}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .platforms{grid-template-columns:repeat(4,1fr)}
+}
+
+@media(max-width:768px){
+  nav,.actions .lang{display:none}
+  .hamburger{display:flex}
+  .hero{padding:40px 0 60px}
+  h1{font-size:38px}
+  .hero p{font-size:16px}
+  .cards,.scenarios,.feature-list{grid-template-columns:1fr}
+  .platforms{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .dashboard{transform:none !important}
+  
+  /* Mobile Navigation Menu Toggle */
+  #menu-toggle:checked ~ nav{
+    display:flex;
+    flex-direction:column;
+    position:absolute;
+    top:76px;
+    left:0;
+    right:0;
+    background:#fff;
+    padding:24px;
+    border-bottom:1px solid var(--line);
+    box-shadow:var(--shadow-md);
+    gap:16px;
+  }
+}
+
+@media(max-width:480px){
+  .hero-buttons{flex-direction:column}
+  .hero-buttons .btn{width:100%}
+  .cta{padding:40px 20px}
+  .cta h2{font-size:28px}
+  .platforms{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr}
+}
+</style>
 </head>
-<body class="bg-cyber-bg text-slate-100 font-sans min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-950">
+<body>
 
-    <!-- Top Glass Navigation -->
-    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80 px-4 lg:px-8 py-3">
-        <div class="max-w-[1700px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            
-            <!-- Brand Logo -->
-            <div class="flex items-center space-x-3.5">
-                <div class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-600 via-indigo-600 to-purple-600 p-[1px] shadow-lg shadow-cyan-500/20">
-                    <div class="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center">
-                        <i class="fa-solid fa-terminal text-xl bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"></i>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <h1 class="text-lg font-extrabold tracking-tight bg-gradient-to-r from-white via-cyan-200 to-purple-300 bg-clip-text text-transparent">
-                            GIFTCODE COMMAND STUDIO
-                        </h1>
-                        <span class="px-2 py-0.5 text-[10px] font-mono font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-md uppercase">
-                            v3.0 Pro
-                        </span>
-                    </div>
-                    <p class="text-xs text-slate-400">Hệ thống Quản lý & Mô phỏng Script Giftcode đa nền tảng</p>
-                </div>
-            </div>
-
-            <!-- Realtime Metrics Panel -->
-            <div class="flex items-center gap-2 sm:gap-4 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
-                <div class="glass-card px-3 py-1.5 rounded-xl flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xs">
-                        <i class="fa-solid fa-key"></i>
-                    </div>
-                    <div>
-                        <p class="text-[10px] uppercase tracking-wider text-slate-400 font-medium">Tổng Mã</p>
-                        <p id="statTotalCodes" class="text-sm font-bold font-mono text-cyan-300">0</p>
-                    </div>
-                </div>
-
-                <div class="glass-card px-3 py-1.5 rounded-xl flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xs">
-                        <i class="fa-solid fa-bolt"></i>
-                    </div>
-                    <div>
-                        <p class="text-[10px] uppercase tracking-wider text-slate-400 font-medium">Lượt Đổi Quà</p>
-                        <p id="statTotalClaims" class="text-sm font-bold font-mono text-emerald-300">0</p>
-                    </div>
-                </div>
-
-                <div class="glass-card px-3 py-1.5 rounded-xl flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center text-xs">
-                        <i class="fa-solid fa-server"></i>
-                    </div>
-                    <div>
-                        <p class="text-[10px] uppercase tracking-wider text-slate-400 font-medium">Thực Thi Script</p>
-                        <p id="statTotalExecutions" class="text-sm font-bold font-mono text-purple-300">0</p>
-                    </div>
-                </div>
-
-                <div class="glass-card px-3 py-1.5 rounded-xl flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-xs">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </div>
-                    <div>
-                        <p class="text-[10px] uppercase tracking-wider text-slate-400 font-medium">Tỷ lệ Thành công</p>
-                        <p id="statSuccessRate" class="text-sm font-bold font-mono text-amber-300">100%</p>
-                    </div>
-                </div>
-
-                <!-- Global Controls -->
-                <div class="flex items-center gap-2 ml-2 pl-2 border-l border-slate-800">
-                    <button id="soundToggleBtn" onclick="toggleSound()" title="Bật/Tắt Âm Thanh" 
-                            class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-cyan-400 border border-slate-700/60 transition-all">
-                        <i id="soundIcon" class="fa-solid fa-volume-high text-sm"></i>
-                    </button>
-                    <button onclick="resetDataToDefault()" title="Khôi phục mặc định" 
-                            class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-rose-400 border border-slate-700/60 transition-all">
-                        <i class="fa-solid fa-rotate-right text-sm"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Tab Navigation Banner -->
-    <div class="border-b border-slate-800/80 bg-slate-950/60 backdrop-blur-md px-4 lg:px-8">
-        <div class="max-w-[1700px] mx-auto flex items-center space-x-1 overflow-x-auto py-2">
-            <button onclick="switchTab('studio')" id="tabBtn-studio" class="tab-btn active px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all">
-                <i class="fa-solid fa-wand-magic-sparkles text-cyan-400"></i>
-                Command Studio & Generator
-            </button>
-            <button onclick="switchTab('simulator')" id="tabBtn-simulator" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all">
-                <i class="fa-solid fa-gamepad text-purple-400"></i>
-                Trình Mô Phỏng Đổi Quà Live
-            </button>
-            <button onclick="switchTab('templates')" id="tabBtn-templates" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all">
-                <i class="fa-solid fa-cubes text-emerald-400"></i>
-                Thư Viện Command Mẫu
-            </button>
-            <button onclick="switchTab('database')" id="tabBtn-database" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all">
-                <i class="fa-solid fa-database text-amber-400"></i>
-                Quản Lý Mã & CSDL
-            </button>
-        </div>
+<header>
+  <div class="container nav">
+    <a class="logo" href="#"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAABVCAYAAAB3hGnPAAAKR0lEQVR4nO2dX4hdRx3HP5GKAQuuWMEHH47sFiNUsktjm4fIRtPaSq2JtJJAbU1gy7bmSm5QqQUhG2xJwZRsbbRVU7yV1BasuqUpTbB/thgxQksvGDHQC72+iA8R8tCHCNH48Lune3bunL937jkzm98HLrt3zsycOffe75nfzO83c9ZN7f0fiqKEyQeaboCiKNVRAStKwKiAFSVgVMCKEjAqYEUJGBWwogSMClhRAkYFrCgBowJWlIBRAStKwKiAFSVgVMCKEjAqYEUJGBWwogSMClhRAkYFrCgBowJWlIBRAStKwFzVdAMqMAncAnwceAf4dbPNUZTmCEnAk8AB4G4j/RngEeDB2lukKA0Tign9C6DHsHhjvg9cBvbV1iJF8QDfBXwAEeZcwfyLwLvAznE1SFF8wlcB70OEu1ChbAQ8B7wNbHfXJEXxD98EfA8yMbWYk68PvJiTZxpYAl4GNo7WLEXxE18EvA3pMZ8GpnLy3gd8CvgqsI58sd8KdIHfA58epZGK4htNC/hG4DXgFaTHzGIBEezPjPT9g/ROTvkdwDng8XJNVBR/aUrAk8CzwBngCzl5jyICPZiTbw8wg5jNWbSQ8fWh3FYqiuc0IeDYJbQrJ18HMae/XaLuLvA1YBPw55y8setpb4n6FcUr1tX8cLN3kVniLE4C3wX+5uB82xHTezon3xIifFdsAq4e/L9csMw0MFHxfB8GLgGnjPTbgIvAf0u0I48trAQAnQfOpuTbDHxscP5XRzzndcA1yDWeLlgmAj4JfIiV76Is54E/VSxbC3UK+Hdki+R1xEx+I+X4RuQHbjs+i3zYaaK/B5kgy2Iv8NOcPEV4jdXDgteBL2bkP0A1d5mNz7PyA/8RciOM6QHXjlj/bcAJI+3aQd1J/g5sMNK2kv7dZmFeB8jN4S8p+XcCD5E/GVqUGcSy85K6TOgp0sXbA+5EfuS2L/gORARdpBcxTd7vDNLPAn/A7vv9FTKObme0cX/GsTJ8NOd9kpdxJ15Y3TtdYxxz8YM264Th3u0Iw+KFahbALMPihfTP7AASA+BKvF08Fi/UJ+AbUtLnkTv4by3HHkB8ws8jd++Ym4x8W4xjS4ipbgurfAwR8jHLMVdfelGeQFxcrnjEYV2jYH4/SY6UrKuTkm773GZxezME+KXj+pxTl4A/aEnrAD830iaRSa7LyA+yqqgixD98GfnRTBrH70WCQWzl6uI+x/WZ7rWmyBpvthHXYREOUe77eKhE3qL8eAx1OqWu1UiXLWn9xP/XI2OdPJdSFdqD1zFEuDFFJtSqYF6r7dq/ZUnrISbgPwfvLw5eRegWzDcqtmspy+OkW2QxGxEvQRm2WNI6iEn9n5J1gbtJv7FSl4DX5Rw/jn3c5JI5Vgs4r01VMeu1neezlrSbsVsFdTGJ3Oiy3HYuPrPPIfMWj2bk6ZSsM7KkPYfEBqxpmo7Eiikj3gsjnCcaoaxLJoz3fZoVL8hcQwsZwoybwxnH5sl3+xXhjIM6vMcXASdZRsavc4hbpCwLSE9xK2KGPc+KOPrWEvWzvukGGOxjRTRzFB+nFuEkEsJq8mxK/idT6lAs+LIjh82XGNOnWs95iuHABsXOovG+A3zGUd0XkQm7ZSN91+A8ye/oN5bybar1yJsqlAkOX3rgNPGGiC83xaLYRLMBGae64g3s49qjif93IvEASbqI6y+PviXtG4gHYhvihpxGIrqiAvUFQwg/tqjpBpSkathezCzlepxLSO9WJfT0DoZFE3OY7ImmsuwBdhtpU8jM+0Fk0smkjKutx7DbsU128I6NPhJ/8BLFbh6NEoKAyxIhoXbnCa9nj6jmvuhQbcY1azIJZNOE2yvUm8Ycw0E0C9hvWE+SHi5p4zhuAjmiwetm5OZWZR6mNnwxoV2yG1mJ9A7it4xfdzXYpqJMVCxn673yOEK+dfMVJP7ZFU9hnx3eYUm7v2TdB5FQWpdswT7E8Ia1KOA0bHG8a4Wyk3UbsZuWthngo5a0UShiKRTdxNDkS9ivYRTuxONh3Fo0oUPmUoUyVWKgbb7eJaTXuxqZAIqJkLBGV/tun0NMd9siBZAFGU+NUP/9g9dW4COsWDVXIde2fvCK3yf/Rtgjum7EHxfkKq4UAZ+m3HiqKc4iPWNUMP8F8ncqMZlHoqFM4tVYd7NawCD+9LzlmGX4Huk9W5kNHLJYrlhuG7LFUxLf/Pbv45OADyE/yC6j+W+XEDPqH9gDCMZNNGL5cc982kzMH7C6h9nNsNvnCdya0y2G1xYfpvnle6NuPlArPgnYDF7vUe3L7NJcAMdmS1rRBQl1YIt+6gIPG2lPI+PQpDm5FZnZd8VLSJRc7MbqIz2zD/TxeNybxCcBm0xR/xrdUXnAkvZm7a1Ix7YPWTsl773IzhpJ0nzGVfk6Kyuc0trRBFHTDSiKT7PQReNd3xtrK6rzQ+struck0i12J2d1X3sRk39zS2tEE0X8mZqfI/39z7uI3C2v4jC24x4o3e0pX9m3s3GjS2p4v42f5/mR3e2uI9Xz4vA3S1v7t29P0tXyK24q2u0sNf0JzS3xX9E3s94s75mJ/9I93g7dK9X/0f3eL228d4Xz5kL30J6s/M1g95O47uI4t84oWpM2o+X2Lh1uV4mS9d1sD6Jd642t10n+8S31Nqf1fL6yRzR/22C99fJd9q8I/n4p/I4/85jU5qGkLzI9+LgB/t4P35eXl9s619C4b1s/I9wB10b8k8p4kS6d3p7S9fR4n9r4b34NqZ0M6t1E3c3J2zI/V+N8YJ4J/8b2E1p/R9+tLd52A/X1PzO6i+G1sL3P4H6K43f6q9b54j7wG2mXq61q3959z1M6D/M31S1038R8sT1T/X/L8T64Ld/T1x62C5t3C4X1i1m2j5b4eM5Jb8i7J01oN8F4b78/148eO/g2Z3r8/m7/4wI=" alt="JFWMS"></a>
+    
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="hamburger" aria-label="Mở menu"><span></span><span></span><span></span></label>
+    
+    <nav>
+      <a href="#home">Trang chủ</a>
+      <a href="#scenarios">Giải pháp</a>
+      <a href="#features">Tính năng</a>
+      <a href="#integrations">Tích hợp</a>
+    </nav>
+    
+    <div class="actions">
+      <span class="lang">VN ▾</span>
+      <a class="btn" href="https://www.jfwms.com/vi?ws=ZBcBL" target="_blank" rel="noopener">Đăng ký ngay</a>
     </div>
+  </div>
+</header>
 
-    <!-- Main Tab Content Area -->
-    <main class="flex-1 p-4 lg:p-8 max-w-[1700px] w-full mx-auto">
-
-        <!-- ================= TAB 1: STUDIO & GENERATOR ================= -->
-        <section id="tab-studio" class="tab-content grid grid-cols-1 lg:grid-cols-12 gap-6">
-            
-            <!-- Left Column: Form & Reward Builder (7 cols) -->
-            <div class="lg:col-span-7 space-y-6">
-                <div class="glass-panel rounded-2xl p-6 shadow-2xl relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-                    <div class="flex items-center justify-between mb-5 pb-3 border-b border-slate-800">
-                        <div class="flex items-center gap-2.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
-                            <h2 class="text-base font-bold text-slate-100 uppercase tracking-wider">Tạo Lệnh Giftcode Mới</h2>
-                        </div>
-                        <span class="text-xs font-mono text-cyan-400/80">Command Engine Config</span>
-                    </div>
-
-                    <form id="studioForm" class="space-y-5">
-                        <!-- Giftcode Name Generator -->
-                        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
-                            <div class="sm:col-span-8">
-                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Tên Mã Giftcode (Code Name)</label>
-                                <input type="text" id="studioCode" required placeholder="VÍ DỤ: VIP999_SUPER_REWARD"
-                                    class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-mono text-cyan-300 focus:outline-none focus:border-cyan-500 transition-all uppercase placeholder:normal-case font-bold">
-                            </div>
-                            <div class="sm:col-span-4 flex items-end">
-                                <button type="button" onclick="generateSmartCode()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/80 rounded-xl text-xs font-medium transition-all flex items-center justify-center gap-2 hover:text-cyan-400">
-                                    <i class="fa-solid fa-dice"></i> Sinh Mã Tự Động
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Target Command Type -->
-                        <div class="grid grid-cols-3 gap-3">
-                            <label class="cursor-pointer">
-                                <input type="radio" name="studioType" value="SQL" checked onchange="updateStudioScriptPreview()" class="peer hidden">
-                                <div class="p-3 rounded-xl border border-slate-800 bg-slate-950/60 peer-checked:border-cyan-500 peer-checked:bg-cyan-500/10 text-center transition-all">
-                                    <i class="fa-solid fa-database text-cyan-400 block text-lg mb-1"></i>
-                                    <span class="text-xs font-bold text-slate-200 block">SQL Query</span>
-                                    <span class="text-[10px] text-slate-400 block">Cập nhật DB Direct</span>
-                                </div>
-                            </label>
-
-                            <label class="cursor-pointer">
-                                <input type="radio" name="studioType" value="JSON" onchange="updateStudioScriptPreview()" class="peer hidden">
-                                <div class="p-3 rounded-xl border border-slate-800 bg-slate-950/60 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 text-center transition-all">
-                                    <i class="fa-solid fa-brackets-curly text-emerald-400 block text-lg mb-1"></i>
-                                    <span class="text-xs font-bold text-slate-200 block">JSON API</span>
-                                    <span class="text-[10px] text-slate-400 block">Webhook / REST API</span>
-                                </div>
-                            </label>
-
-                            <label class="cursor-pointer">
-                                <input type="radio" name="studioType" value="COMMAND" onchange="updateStudioScriptPreview()" class="peer hidden">
-                                <div class="p-3 rounded-xl border border-slate-800 bg-slate-950/60 peer-checked:border-purple-500 peer-checked:bg-purple-500/10 text-center transition-all">
-                                    <i class="fa-solid fa-terminal text-purple-400 block text-lg mb-1"></i>
-                                    <span class="text-xs font-bold text-slate-200 block">Game Console</span>
-                                    <span class="text-[10px] text-slate-400 block">Command RCON</span>
-                                </div>
-                            </label>
-                        </div>
-
-                        <!-- Interactive Reward Item Builder -->
-                        <div class="bg-slate-950/80 border border-slate-800/80 rounded-xl p-4 space-y-3">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold text-slate-300 flex items-center gap-2">
-                                    <i class="fa-solid fa-box-open text-amber-400"></i> Trình Dựng Vật Phẩm Quà Tặng (Reward Builder)
-                                </span>
-                                <button type="button" onclick="addRewardItemRow()" class="px-2.5 py-1 text-[11px] bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-lg hover:bg-cyan-500/20 transition-all flex items-center gap-1">
-                                    <i class="fa-solid fa-plus"></i> Thêm Item
-                                </button>
-                            </div>
-                            
-                            <div id="rewardItemsList" class="space-y-2">
-                                <!-- Item rows dynamically added -->
-                            </div>
-                        </div>
-
-                        <!-- Custom Raw Command Editor -->
-                        <div>
-                            <div class="flex items-center justify-between mb-1.5">
-                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider">Lệnh / Script Chi Tiết (Raw Command Script)</label>
-                                <span class="text-[10px] font-mono text-slate-400">Var hỗ trợ: <span class="text-amber-300">{user_id}</span>, <span class="text-amber-300">{code}</span></span>
-                            </div>
-                            <textarea id="studioRawScript" rows="5" required oninput="playTypingSound()"
-                                class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-emerald-400 focus:outline-none focus:border-cyan-500 transition-all leading-relaxed"></textarea>
-                        </div>
-
-                        <!-- Usage Limits & Dates -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Giới hạn Lượt Dùng</label>
-                                <input type="number" id="studioMaxUses" value="500" min="1" required
-                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Ngày Hết Hạn</label>
-                                <input type="date" id="studioExpiry" required
-                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500">
-                            </div>
-                        </div>
-
-                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-cyan-500 via-indigo-600 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-slate-950 font-extrabold rounded-xl text-sm shadow-lg shadow-cyan-500/25 transition-all transform active:scale-[0.99] flex items-center justify-center gap-2 uppercase tracking-wider">
-                            <i class="fa-solid fa-floppy-disk text-base"></i> Kích Hoạt & Lưu Mã Giftcode
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Right Column: Live Command Script Preview (5 cols) -->
-            <div class="lg:col-span-5 space-y-6">
-                <div class="glass-panel rounded-2xl p-6 shadow-2xl h-full flex flex-col">
-                    <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-eye text-cyan-400"></i>
-                            <h3 class="text-sm font-bold text-slate-100 uppercase tracking-wider">Xem Trước Command Execution</h3>
-                        </div>
-                        <span class="px-2 py-0.5 text-[10px] font-mono bg-slate-800 text-slate-300 rounded" id="previewTypeBadge">SQL</span>
-                    </div>
-
-                    <p class="text-xs text-slate-400 mb-3">Xem trước cấu trúc lệnh sẽ được máy chủ thực thi khi người chơi nhập đổi quà:</p>
-
-                    <!-- Realtime Compiled Code Block -->
-                    <div class="relative flex-1 bg-slate-950 rounded-xl border border-slate-800 p-4 font-mono text-xs overflow-hidden flex flex-col">
-                        <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-900 text-[10px] text-slate-500">
-                            <span>compiled_payload.script</span>
-                            <button onclick="copyPreviewScript()" class="hover:text-cyan-400 transition-colors">
-                                <i class="fa-regular fa-copy"></i> Copy
-                            </button>
-                        </div>
-                        <pre id="studioCompiledPreview" class="flex-1 text-emerald-400 whitespace-pre-wrap overflow-y-auto leading-relaxed"></pre>
-                    </div>
-
-                    <div class="mt-4 p-3 bg-slate-950/60 rounded-xl border border-slate-800/80 text-xs text-slate-400 space-y-1">
-                        <p class="text-cyan-400 font-semibold flex items-center gap-1.5">
-                            <i class="fa-solid fa-shield-halved"></i> Luồng Xử Lý An Toàn:
-                        </p>
-                        <p class="text-[11px] leading-relaxed">Khi người chơi nhập mã, hệ thống sẽ thực hiện xác minh chữ ký, kiểm tra hạn dùng & lượt còn lại trước khi bắn Command tới Database hoặc RCON Game Server.</p>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- ================= TAB 2: LIVE SIMULATOR ================= -->
-        <section id="tab-simulator" class="tab-content hidden space-y-6">
-            
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- Simulator Console Input Panel (5 cols) -->
-                <div class="lg:col-span-5 space-y-6">
-                    <div class="glass-panel rounded-2xl p-6 shadow-2xl relative overflow-hidden">
-                        <div class="flex items-center justify-between mb-5 border-b border-slate-800 pb-3">
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
-                                <h2 class="text-base font-bold text-slate-100 uppercase tracking-wider">Simulator Terminal</h2>
-                            </div>
-                            <span class="text-xs font-mono text-emerald-400">Live Client Emulator</span>
-                        </div>
-
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Player / User ID Giả Lập</label>
-                                <div class="relative">
-                                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                                        <i class="fa-solid fa-user-ninja"></i>
-                                    </span>
-                                    <input type="text" id="simPlayerId" value="gamer_hero_2026"
-                                        class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-xs font-mono text-cyan-300 focus:outline-none focus:border-cyan-500">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Mã Giftcode Cần Test Đổi</label>
-                                <div class="relative">
-                                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                                        <i class="fa-solid fa-ticket"></i>
-                                    </span>
-                                    <input type="text" id="simCodeInput" placeholder="Nhập mã giftcode..."
-                                        class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-sm font-mono text-amber-300 uppercase focus:outline-none focus:border-cyan-500 font-bold placeholder:normal-case">
-                                </div>
-                            </div>
-
-                            <button onclick="runLiveRedeem()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-extrabold rounded-xl text-sm shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 uppercase tracking-wider active:scale-95">
-                                <i class="fa-solid fa-bolt text-base"></i> Đổi Quà & Thực Thi Script
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Quick Code Selector for Simulator -->
-                    <div class="glass-panel rounded-2xl p-5 shadow-xl">
-                        <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3 flex items-center justify-between">
-                            <span>Chọn Nhanh Mã Để Test</span>
-                            <i class="fa-solid fa-hand-pointer text-cyan-400"></i>
-                        </h3>
-                        <div id="simQuickCodes" class="space-y-2 max-h-56 overflow-y-auto pr-1">
-                            <!-- Quick items injected via JS -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Terminal Execution Log & Live Drop Preview (7 cols) -->
-                <div class="lg:col-span-7 space-y-6">
-                    
-                    <!-- Live Item Drop Visualizer -->
-                    <div id="itemDropContainer" class="hidden glass-panel rounded-2xl p-6 border border-emerald-500/40 shadow-2xl bg-gradient-to-r from-slate-900 via-emerald-950/20 to-slate-900 animate-float">
-                        <div class="flex items-center justify-between border-b border-emerald-500/30 pb-3 mb-4">
-                            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest flex items-center gap-2">
-                                <i class="fa-solid fa-gift text-lg animate-bounce"></i> Vật Phẩm Đã Nhận Thành Công!
-                            </span>
-                            <span class="text-[10px] font-mono text-emerald-300/80">REWARD UNLOCKED</span>
-                        </div>
-                        <div id="itemDropList" class="flex flex-wrap gap-3">
-                            <!-- Item Badges Injected Dynamically -->
-                        </div>
-                    </div>
-
-                    <!-- Cyberpunk Terminal Screen -->
-                    <div class="glass-panel rounded-2xl border border-slate-800 shadow-2xl overflow-hidden flex flex-col h-[500px]">
-                        <!-- Terminal Bar -->
-                        <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
-                            <div class="flex items-center space-x-2">
-                                <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
-                                <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
-                                <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
-                                <span class="ml-2 text-xs font-mono text-slate-400 font-semibold">Console Terminal execution.log</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">RCON Connected</span>
-                                <button onclick="clearTerminal()" class="text-xs text-slate-500 hover:text-slate-300 transition-colors">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Terminal Body -->
-                        <div id="simTerminalLog" class="flex-1 bg-slate-950 p-4 font-mono text-xs overflow-y-auto space-y-2 text-slate-300 leading-relaxed">
-                            <p class="text-slate-500 flex items-center gap-2">
-                                <span class="text-emerald-500">$</span> Sẵn sàng lắng nghe yêu cầu mô phỏng. Chọn mã và chọn "Đổi Quà".
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- ================= TAB 3: COMMAND TEMPLATES ================= -->
-        <section id="tab-templates" class="tab-content hidden space-y-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h2 class="text-lg font-bold text-slate-100">Thư Viện Mẫu Câu Lệnh (Command Templates)</h2>
-                    <p class="text-xs text-slate-400">Các mẫu Script chuẩn hóa hỗ trợ 1-Click áp dụng trực tiếp vào Studio</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- SQL Templates -->
-                <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
-                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-                        <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-database"></i> SQL Database Queries
-                        </span>
-                        <span class="text-[10px] bg-cyan-500/10 text-cyan-400 px-2 py-0.5 rounded border border-cyan-500/20">SQL</span>
-                    </div>
-
-                    <div class="space-y-3">
-                        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800/80 hover:border-cyan-500/50 transition-all cursor-pointer group"
-                             onclick="useTemplate('SQL', 'UPDATE users SET gold = gold + 50000, diamonds = diamonds + 500 WHERE user_id = \'{user_id}\';')">
-                            <div class="flex items-center justify-between text-xs font-bold text-slate-200 mb-1">
-                                <span>Cộng Vàng & Kim Cương</span>
-                                <i class="fa-solid fa-arrow-right text-slate-600 group-hover:text-cyan-400 transition-colors"></i>
-                            </div>
-                            <pre class="text-[10px] font-mono text-slate-400 truncate">UPDATE users SET gold = gold + 50000...</pre>
-                        </div>
-
-                        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800/80 hover:border-cyan-500/50 transition-all cursor-pointer group"
-                             onclick="useTemplate('SQL', 'INSERT INTO user_inventory (user_id, item_id, amount) VALUES (\'{user_id}\', 8001, 1) ON DUPLICATE KEY UPDATE amount = amount + 1;')">
-                            <div class="flex items-center justify-between text-xs font-bold text-slate-200 mb-1">
-                                <span>Thêm Vật Phẩm Bảng Inventory</span>
-                                <i class="fa-solid fa-arrow-right text-slate-600 group-hover:text-cyan-400 transition-colors"></i>
-                            </div>
-                            <pre class="text-[10px] font-mono text-slate-400 truncate">INSERT INTO user_inventory (user_id, item_id...)</pre>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- JSON Templates -->
-                <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
-                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-                        <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-brackets-curly"></i> JSON REST Webhook
-                        </span>
-                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">JSON</span>
-                    </div>
-
-                    <div class="space-y-3">
-                        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800/80 hover:border-emerald-500/50 transition-all cursor-pointer group"
-                             onclick="useTemplate('JSON', '{\n  \"action\": \"GRANT_REWARD\",\n  \"player\": \"{user_id}\",\n  \"code\": \"{code}\",\n  \"items\": [\n    {\"id\": \"sword_god\", \"qty\": 1},\n    {\"id\": \"potion_hp\", \"qty\": 10}\n  ]\n}')">
-                            <div class="flex items-center justify-between text-xs font-bold text-slate-200 mb-1">
-                                <span>Gói Quà Tổng Hợp Webhook</span>
-                                <i class="fa-solid fa-arrow-right text-slate-600 group-hover:text-emerald-400 transition-colors"></i>
-                            </div>
-                            <pre class="text-[10px] font-mono text-slate-400 truncate">{ "action": "GRANT_REWARD", "player": "{user_id}"... }</pre>
-                        </div>
-
-                        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800/80 hover:border-emerald-500/50 transition-all cursor-pointer group"
-                             onclick="useTemplate('JSON', '{\n  \"event\": \"VIP_UPGRADE\",\n  \"target_user\": \"{user_id}\",\n  \"vip_level\": 5,\n  \"duration_days\": 30\n}')">
-                            <div class="flex items-center justify-between text-xs font-bold text-slate-200 mb-1">
-                                <span>Kích Hoạt VIP 30 Ngày</span>
-                                <i class="fa-solid fa-arrow-right text-slate-600 group-hover:text-emerald-400 transition-colors"></i>
-                            </div>
-                            <pre class="text-[10px] font-mono text-slate-400 truncate">{ "event": "VIP_UPGRADE", "vip_level": 5... }</pre>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Game Console Commands -->
-                <div class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
-                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-                        <span class="text-xs font-bold text-purple-400 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-terminal"></i> Game Console (RCON)
-                        </span>
-                        <span class="text-[10px] bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded border border-purple-500/20">RCON</span>
-                    </div>
-
-                    <div class="space-y-3">
-                        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800/80 hover:border-purple-500/50 transition-all cursor-pointer group"
-                             onclick="useTemplate('COMMAND', '/give {user_id} minecraft:diamond_sword{Enchantments:[{id:\"sharpness\",lvl:5}]} 1\n/effect give {user_id} minecraft:speed 600 2')">
-                            <div class="flex items-center justify-between text-xs font-bold text-slate-200 mb-1">
-                                <span>Minecraft Vũ Khí & Effect</span>
-                                <i class="fa-solid fa-arrow-right text-slate-600 group-hover:text-purple-400 transition-colors"></i>
-                            </div>
-                            <pre class="text-[10px] font-mono text-slate-400 truncate">/give {user_id} minecraft:diamond_sword...</pre>
-                        </div>
-
-                        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800/80 hover:border-purple-500/50 transition-all cursor-pointer group"
-                             onclick="useTemplate('COMMAND', 'addexp {user_id} 50000\nsetrank {user_id} VIP_GOLD\nbroadcast \"Người chơi {user_id} vừa nhận quà Giftcode VIP!\"')">
-                            <div class="flex items-center justify-between text-xs font-bold text-slate-200 mb-1">
-                                <span>MMORPG AddExp & SetRank</span>
-                                <i class="fa-solid fa-arrow-right text-slate-600 group-hover:text-purple-400 transition-colors"></i>
-                            </div>
-                            <pre class="text-[10px] font-mono text-slate-400 truncate">addexp {user_id} 50000; setrank...</pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= TAB 4: DATABASE & CODES MANAGER ================= -->
-        <section id="tab-database" class="tab-content hidden space-y-6">
-            <div class="glass-panel rounded-2xl p-6 shadow-2xl space-y-5">
-                
-                <!-- Table Header Controls -->
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
-                    <div>
-                        <h2 class="text-base font-bold text-slate-100 uppercase tracking-wider">Cơ Sở Dữ Liệu Giftcode</h2>
-                        <p class="text-xs text-slate-400">Danh sách các mã đang hoạt động trên Server</p>
-                    </div>
-
-                    <div class="flex items-center gap-3">
-                        <div class="relative w-full md:w-64">
-                            <input type="text" id="dbSearchInput" placeholder="Tìm tên mã / script..." oninput="renderDatabaseTable()"
-                                class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500">
-                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-slate-500"></i>
-                        </div>
-
-                        <select id="dbFilterType" onchange="renderDatabaseTable()" class="bg-slate-950 border border-slate-800 text-slate-300 text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-cyan-500">
-                            <option value="ALL">Tất cả loại</option>
-                            <option value="SQL">SQL</option>
-                            <option value="JSON">JSON</option>
-                            <option value="COMMAND">COMMAND</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Main Data Table -->
-                <div class="overflow-x-auto rounded-xl border border-slate-800/80">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-950/80 text-[11px] uppercase tracking-wider text-slate-400 font-semibold border-b border-slate-800">
-                                <th class="py-3 px-4">Mã Giftcode</th>
-                                <th class="py-3 px-4">Loại Command</th>
-                                <th class="py-3 px-4">Script Xem Trước</th>
-                                <th class="py-3 px-4 text-center">Tiến Độ Lượt Dùng</th>
-                                <th class="py-3 px-4">Hạn Dùng</th>
-                                <th class="py-3 px-4 text-right">Thao Tác</th>
-                            </tr>
-                        </thead>
-                        <tbody id="databaseTableBody" class="divide-y divide-slate-800/60 text-xs font-mono">
-                            <!-- Injected dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Script Inspector Modal -->
-    <div id="inspectorModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
-        <div class="glass-panel border border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                <div class="flex items-center gap-2">
-                    <span id="inspectBadge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">SQL</span>
-                    <h3 class="text-sm font-bold text-slate-100 font-mono" id="inspectTitle">CODE_NAME</h3>
-                </div>
-                <button onclick="closeInspectorModal()" class="text-slate-400 hover:text-white transition-colors">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-
-            <div>
-                <p class="text-xs text-slate-400 mb-2 font-sans">Chi tiết script thực thi được lưu trữ:</p>
-                <div class="relative">
-                    <pre id="inspectScriptText" class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs text-emerald-400 overflow-x-auto whitespace-pre-wrap max-h-72 leading-relaxed"></pre>
-                </div>
-            </div>
-
-            <div class="flex justify-between items-center pt-2">
-                <button onclick="copyInspectScript()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-sans border border-slate-700 flex items-center gap-1.5 transition-all">
-                    <i class="fa-regular fa-copy"></i> Sao Chép Script
-                </button>
-                <button onclick="closeInspectorModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-sans font-medium transition-all">
-                    Đóng
-                </button>
-            </div>
+<main id="home">
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+        WMS · Hệ thống quản lý kho hàng
+      </span>
+      <h1>Quản lý kho <span>đơn giản</span><br>Hiệu quả hơn mỗi ngày</h1>
+      <p>Giải pháp quản lý kho toàn diện cho nhiều mô hình kinh doanh, giúp chuẩn hóa quy trình, kiểm soát tồn kho và nâng cao hiệu suất vận hành chuẩn xác.</p>
+      <div class="hero-buttons">
+        <a class="btn" href="https://www.jfwms.com/vi?ws=ZBcBL" target="_blank" rel="noopener">Dùng thử miễn phí</a>
+        <a class="btn light" href="#features">Khám phá tính năng</a>
+      </div>
+    </div>
+    
+    <div class="dashboard" aria-label="WMS dashboard prototype">
+      <div class="dash-top"><i class="dot"></i><i class="dot"></i><i class="dot"></i></div>
+      <div class="dash-body">
+        <aside class="sidebar">
+          <div class="side-line"></div>
+          <div class="side-line"></div>
+          <div class="side-line"></div>
+          <div class="side-line"></div>
+          <div class="side-line"></div>
+        </aside>
+        <div class="panel">
+         <div class="stat">
+          <div class="stat-top"><small>Đơn hàng</small><span class="trend up">▲ 12%</span></div>
+          <b>12,580</b>
+          <svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline points="0,25 15,21 30,23 45,15 60,17 75,9 100,6"></polyline></svg>
+         </div>
+         <div class="stat">
+          <div class="stat-top"><small>Tồn kho</small><span class="trend up">▲ 3%</span></div>
+          <b>98.6%</b>
+          <svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline points="0,17 15,19 30,14 45,16 60,11 75,13 100,7"></polyline></svg>
+         </div>
+         <div class="stat">
+          <div class="stat-top"><small>Xuất kho</small><span class="trend down">▼ 4%</span></div>
+          <b>8,240</b>
+          <svg class="spark down" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline points="0,8 15,12 30,10 45,16 60,14 75,20 100,22"></polyline></svg>
+         </div>
+         <div class="chart">
+          <small>Tổng quan kho hàng</small>
+          <svg viewBox="0 0 400 150" preserveAspectRatio="none">
+           <rect x="10" y="70" width="30" height="70" rx="4" fill="#dbe8ff"></rect>
+           <rect x="60" y="50" width="30" height="90" rx="4" fill="#b6cfff"></rect>
+           <rect x="110" y="85" width="30" height="55" rx="4" fill="#dbe8ff"></rect>
+           <rect x="160" y="35" width="30" height="105" rx="4" fill="#8bb2ff"></rect>
+           <rect x="210" y="60" width="30" height="80" rx="4" fill="#b6cfff"></rect>
+           <rect x="260" y="20" width="30" height="120" rx="4" fill="#4d8cff"></rect>
+           <rect x="310" y="45" width="30" height="95" rx="4" fill="#8bb2ff"></rect>
+           <rect x="360" y="10" width="30" height="130" rx="4" fill="#246bfe"></rect>
+           <polyline points="25,55 75,35 125,65 175,20 225,45 275,10 325,30 375,0" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".4"></polyline>
+          </svg>
+         </div>
         </div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <!-- Notification Toast -->
-    <div id="cyberToast" class="fixed bottom-6 right-6 z-50 transform translate-y-10 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-slate-900/90 border border-slate-700 text-slate-100 px-4 py-3 rounded-xl shadow-2xl text-xs font-medium backdrop-blur-md">
-        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
-        <span id="toastMsg">Notification message</span>
+<section class="gray">
+ <div class="container">
+  <div class="section-head">
+    <h2>Tại sao chọn JFWMS?</h2>
+    <p>Một hệ thống WMS hướng tới sự đơn giản, khả năng mở rộng linh hoạt và tối ưu vận hành.</p>
+  </div>
+  <div class="cards">
+   <div class="card"><div class="icon">◎</div><h3>Toàn cảnh nghiệp vụ</h3><p>Hỗ trợ đa dạng mô hình kho và quy trình vận hành từ nhập, lưu trữ đến xuất hàng chuẩn xác.</p></div>
+   <div class="card"><div class="icon">🌐</div><h3>Phù hợp thị trường</h3><p>Giao diện đa ngôn ngữ, thao tác trực quan và thân thiện với đội ngũ vận hành tại Việt Nam và quốc tế.</p></div>
+   <div class="card"><div class="icon">⚡</div><h3>Đổi mới nhanh chóng</h3><p>Liên tục cập nhật và cải tiến tính năng sản phẩm dựa trên nhu cầu thực tế của thị trường.</p></div>
+   <div class="card"><div class="icon">✓</div><h3>Đáng tin cậy</h3><p>Đội ngũ chuyên gia giàu kinh nghiệm, hệ thống ổn định và bảo mật an toàn dữ liệu tuyệt đối.</p></div>
+   <div class="card"><div class="icon">24</div><h3>Hỗ trợ 24/7</h3><p>Đội ngũ kỹ thuật hỗ trợ nhanh chóng, tận tình trong suốt quá trình triển khai và vận hành.</p></div>
+   <div class="card"><div class="icon">↔</div><h3>Kết nối hệ sinh thái</h3><p>Tích hợp sẵn sàng với ERP, các sàn thương mại điện tử lớn và đơn vị vận chuyển phổ biến.</p></div>
+  </div>
+ </div>
+</section>
+
+<section id="scenarios">
+ <div class="container">
+  <div class="section-head">
+    <h2>Giải pháp cho nhiều mô hình kho</h2>
+    <p>Thiết kế tối ưu theo từng kịch bản nghiệp vụ giúp doanh nghiệp triển khai nhanh chóng.</p>
+  </div>
+  <div class="scenarios">
+   <div class="scenario blue">
+     <h3>Kho fulfillment</h3>
+     <ul>
+       <li>Quản lý đơn hàng tập trung</li>
+       <li>Nhập kho và Xuất kho B2C</li>
+       <li>Lấy hàng và Đóng gói chính xác</li>
+       <li>Kiểm soát tồn kho theo thời gian thực</li>
+     </ul>
+   </div>
+   <div class="scenario dark">
+     <h3>B2B / FBA</h3>
+     <ul>
+       <li>Điều chuyển và quản lý hoàn trả</li>
+       <li>Chuẩn hóa quy trình xuất hàng số lượng lớn</li>
+       <li>Quản lý theo Pallet / Kiện hàng</li>
+       <li>Theo dõi trạng thái đơn hàng tức thì</li>
+     </ul>
+   </div>
+   <div class="scenario blue">
+     <h3>Kho đại lý</h3>
+     <ul>
+       <li>Tối ưu chi phí, không cần đầu tư kho riêng</li>
+       <li>Kết nối trực tiếp khách hàng với kho Fulfillment</li>
+       <li>Triển khai nhanh, mở rộng quy mô linh hoạt</li>
+       <li>Vận hành tinh gọn, tiết kiệm ngân sách</li>
+     </ul>
+   </div>
+   <div class="scenario dark">
+     <h3>Giải pháp phân phối</h3>
+     <ul>
+       <li>Đưa sản phẩm tới nhà phân phối dễ dàng</li>
+       <li>Tự động hóa hoàn toàn từ khâu đóng đơn</li>
+       <li>Mở rộng kênh bán hàng không giới hạn</li>
+       <li>Theo dõi đơn hàng minh bạch thời gian thực</li>
+     </ul>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="gray" id="features">
+ <div class="container features">
+  <div class="feature-visual">
+    <div class="visual-frame">
+      <div class="live-badge"><span class="dot"></span>Thời gian thực</div>
+      <div class="app-window">
+        <div class="app-bar"><i></i><i></i><i></i></div>
+        <svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+          <linearGradient id="plTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3f7ff"/><stop offset="1" stop-color="#e4ecfb"/></linearGradient>
+          <radialGradient id="shadowGrad" cx="0.5" cy="0.5" r="0.5"><stop offset="0%" stop-color="#1e3a6e" stop-opacity="0.22"/><stop offset="100%" stop-color="#1e3a6e" stop-opacity="0"/></radialGradient>
+          </defs>
+          <ellipse cx="400.0" cy="345.0" rx="300" ry="78" fill="url(#shadowGrad)"/>
+          <polygon points="400.0,146.2 150.6,290.2 150.6,319.0 400.0,175.0" fill="#a3afc6"/>
+          <polygon points="649.4,290.2 400.0,434.2 400.0,463.0 649.4,319.0" fill="#bdcbe5"/>
+          <polygon points="400.0,146.2 649.4,290.2 400.0,434.2 150.6,290.2" fill="url(#plTop)" stroke="#dbe6fa" stroke-width="1"/>
+          <line x1="379.2" y1="158.2" x2="628.6" y2="302.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="420.8" y1="158.2" x2="171.4" y2="302.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="358.4" y1="170.2" x2="607.8" y2="314.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="441.6" y1="170.2" x2="192.2" y2="314.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="337.6" y1="182.2" x2="587.1" y2="326.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="462.4" y1="182.2" x2="212.9" y2="326.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="316.9" y1="194.2" x2="566.3" y2="338.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="483.1" y1="194.2" x2="233.7" y2="338.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="296.1" y1="206.2" x2="545.5" y2="350.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="503.9" y1="206.2" x2="254.5" y2="350.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="275.3" y1="218.2" x2="524.7" y2="362.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="524.7" y1="218.2" x2="275.3" y2="362.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="254.5" y1="230.2" x2="503.9" y2="374.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="545.5" y1="230.2" x2="296.1" y2="374.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="233.7" y1="242.2" x2="483.1" y2="386.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="566.3" y1="242.2" x2="316.9" y2="386.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="212.9" y1="254.2" x2="462.4" y2="398.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="587.1" y1="254.2" x2="337.6" y2="398.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="192.2" y1="266.2" x2="441.6" y2="410.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="607.8" y1="266.2" x2="358.4" y2="410.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="171.4" y1="278.2" x2="420.8" y2="422.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <line x1="628.6" y1="278.2" x2="379.2" y2="422.2" stroke="#dde7fa" stroke-width="0.8"/>
+          <ellipse cx="404.2" cy="218.6" rx="65" ry="16" fill="#15234a" opacity="0.10"/>
+          <ellipse cx="333.5" cy="259.4" rx="65" ry="16" fill="#15234a" opacity="0.10"/>
+          <ellipse cx="497.7" cy="267.8" rx="65" ry="16" fill="#15234a" opacity="0.10"/>
+          <ellipse cx="429.1" cy="307.4" rx="65" ry="16" fill="#15234a" opacity="0.10"/>
+          <line x1="395.8" y1="196.6" x2="395.8" y2="100.6" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="435.3" y1="219.4" x2="435.3" y2="123.4" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="412.5" y1="232.6" x2="412.5" y2="136.6" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="373.0" y1="209.8" x2="373.0" y2="113.8" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="373.0" y1="206.9" x2="412.5" y2="229.7" stroke="#33415c" stroke-width="1.8" opacity="0.5"/>
+          <polygon points="396.7,175.5 378.4,186.0 378.4,205.7 396.7,195.2" fill="#b65b3c"/>
+          <polygon points="378.4,186.0 394.6,195.4 394.6,215.1 378.4,205.7" fill="#f0784f"/>
+          <polygon points="396.7,175.5 412.9,184.8 394.6,195.4 378.4,186.0" fill="#f4a387"/>
+          <polygon points="415.4,186.3 397.1,196.8 397.1,216.5 415.4,206.0" fill="#3a6ac1"/>
+          <polygon points="397.1,196.8 413.3,206.2 413.3,225.9 397.1,216.5" fill="#4d8cff"/>
+          <polygon points="415.4,186.3 431.6,195.6 413.3,206.2 397.1,196.8" fill="#85b0ff"/>
+          <line x1="373.0" y1="157.7" x2="412.5" y2="180.5" stroke="#33415c" stroke-width="1.8" opacity="0.5"/>
+          <polygon points="396.7,126.2 378.4,136.8 378.4,156.5 396.7,145.9" fill="#3a6ac1"/>
+          <polygon points="378.4,136.8 394.6,146.2 394.6,165.8 378.4,156.5" fill="#4d8cff"/>
+          <polygon points="396.7,126.2 412.9,135.6 394.6,146.2 378.4,136.8" fill="#85b0ff"/>
+          <polygon points="415.4,137.0 397.1,147.6 397.1,167.3 415.4,156.7" fill="#b65b3c"/>
+          <polygon points="397.1,147.6 413.3,157.0 413.3,176.6 397.1,167.3" fill="#f0784f"/>
+          <polygon points="415.4,137.0 431.6,146.4 413.3,157.0 397.1,147.6" fill="#f4a387"/>
+          <line x1="325.2" y1="237.4" x2="325.2" y2="141.4" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="364.7" y1="260.2" x2="364.7" y2="164.2" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="341.8" y1="273.4" x2="341.8" y2="177.4" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="302.3" y1="250.6" x2="302.3" y2="154.6" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="302.3" y1="247.7" x2="341.8" y2="270.5" stroke="#33415c" stroke-width="1.8" opacity="0.5"/>
+          <polygon points="326.0,216.3 307.7,226.8 307.7,246.5 326.0,236.0" fill="#b65b3c"/>
+          <polygon points="307.7,226.8 323.9,236.2 323.9,255.9 307.7,246.5" fill="#f0784f"/>
+          <polygon points="326.0,216.3 342.2,225.6 323.9,236.2 307.7,226.8" fill="#f4a387"/>
+          <polygon points="344.7,227.1 326.4,237.6 326.4,257.3 344.7,246.8" fill="#3a6ac1"/>
+          <polygon points="326.4,237.6 342.6,247.0 342.6,266.7 326.4,257.3" fill="#4d8cff"/>
+          <polygon points="344.7,227.1 360.9,236.4 342.6,247.0 326.4,237.6" fill="#85b0ff"/>
+          <line x1="302.3" y1="198.5" x2="341.8" y2="221.3" stroke="#33415c" stroke-width="1.8" opacity="0.5"/>
+          <polygon points="326.0,167.0 307.7,177.6 307.7,197.3 326.0,186.7" fill="#3a6ac1"/>
+          <polygon points="307.7,177.6 323.9,187.0 323.9,206.6 307.7,197.3" fill="#4d8cff"/>
+          <polygon points="326.0,167.0 342.2,176.4 323.9,187.0 307.7,177.6" fill="#85b0ff"/>
+          <polygon points="344.7,177.8 326.4,188.4 326.4,208.1 344.7,197.5" fill="#b65b3c"/>
+          <polygon points="326.4,188.4 342.6,197.8 342.6,217.4 326.4,208.1" fill="#f0784f"/>
+          <polygon points="344.7,177.8 360.9,187.2 342.6,197.8 326.4,188.4" fill="#f4a387"/>
+          <line x1="489.4" y1="245.8" x2="489.4" y2="149.8" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="528.9" y1="268.6" x2="528.9" y2="172.6" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="506.0" y1="281.8" x2="506.0" y2="185.8" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="466.5" y1="259.0" x2="466.5" y2="163.0" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="466.5" y1="256.1" x2="506.0" y2="278.9" stroke="#33415c" stroke-width="1.8" opacity="0.5"/>
+          <polygon points="490.2,224.7 471.9,235.2 471.9,254.9 490.2,244.4" fill="#b65b3c"/>
+          <polygon points="471.9,235.2 488.1,244.6 488.1,264.3 471.9,254.9" fill="#f0784f"/>
+          <polygon points="490.2,224.7 506.4,234.0 488.1,244.6 471.9,235.2" fill="#f4a387"/>
+          <polygon points="508.9,235.5 490.6,246.0 490.6,265.7 508.9,255.2" fill="#3a6ac1"/>
+          <polygon points="490.6,246.0 506.8,255.4 506.8,275.1 490.6,265.7" fill="#4d8cff"/>
+          <polygon points="508.9,235.5 525.1,244.8 506.8,255.4 490.6,246.0" fill="#85b0ff"/>
+          <line x1="466.5" y1="206.9" x2="506.0" y2="229.7" stroke="#33415c" stroke-width="1.8" opacity="0.5"/>
+          <polygon points="490.2,175.4 471.9,186.0 471.9,205.7 490.2,195.1" fill="#3a6ac1"/>
+          <polygon points="471.9,186.0 488.1,195.4 488.1,215.0 471.9,205.7" fill="#4d8cff"/>
+          <polygon points="490.2,175.4 506.4,184.8 488.1,195.4 471.9,186.0" fill="#85b0ff"/>
+          <polygon points="508.9,186.2 490.6,196.8 490.6,216.5 508.9,205.9" fill="#b65b3c"/>
+          <polygon points="490.6,196.8 506.8,206.2 506.8,225.8 490.6,216.5" fill="#f0784f"/>
+          <polygon points="508.9,186.2 525.1,195.6 506.8,206.2 490.6,196.8" fill="#f4a387"/>
+          <line x1="420.8" y1="285.4" x2="420.8" y2="189.4" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="460.3" y1="308.2" x2="460.3" y2="212.2" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="437.4" y1="321.4" x2="437.4" y2="225.4" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="397.9" y1="298.6" x2="397.9" y2="202.6" stroke="#33415c" stroke-width="1.8"/>
+          <line x1="397.9" y1="295.7" x2="437.4" y2="318.5" stroke="#33415c" stroke-width="1.8" opacity="0.5"/>
+          <polygon points="421.6,264.3 403.3,274.8 403.3,294.5 421.6,284.0" fill="#b65b3c"/>
+          <polygon points="403.3,274.8 419.5,284.2 419.5,303.9 403.3,294.5" fill="#f0784f"/>
+          <polygon points="421.6,264.3 437.8,273.6 419.5,284.2 403.3,274.8" fill="#f4a387"/>
+          <polygon points="440.3,275.1 422.0,285.6 422.0,305.3 440.3,294.8" fill="#3a6ac1"/>
+          <polygon points="422.0,285.6 438.2,295.0 438.2,314.7 422.0,305.3" fill="#4d8cff"/>
+          <polygon points="440.3,275.1 456.5,284.4 438.2,295.0 422.0,285.6" fill="#85b0ff"/>
+          <line x1="397.9" y1="246.5" x2="437.4" y2="269.3" stroke="#33415c" stroke-width="1.8" opacity="0.5"/>
+          <polygon points="421.6,215.0 403.3,225.6 403.3,245.3 421.6,234.7" fill="#3a6ac1"/>
+          <polygon points="403.3,225.6 419.5,235.0 419.5,254.6 403.3,245.3" fill="#4d8cff"/>
+          <polygon points="421.6,215.0 437.8,224.4 419.5,235.0 403.3,225.6" fill="#85b0ff"/>
+          <polygon points="440.3,225.8 422.0,236.4 422.0,256.1 440.3,245.5" fill="#b65b3c"/>
+          <polygon points="422.0,236.4 438.2,245.8 438.2,265.4 422.0,256.1" fill="#f0784f"/>
+          <polygon points="440.3,225.8 456.5,235.2 438.2,245.8 422.0,236.4" fill="#f4a387"/>
+          <ellipse cx="420.8" cy="368.6" rx="95" ry="22" fill="#15234a" opacity="0.10"/>
+          <polygon points="420.8,302.2 392.7,318.4 392.7,354.4 420.8,338.2" fill="#c8cfde" stroke="#aebfe0" stroke-width="1"/>
+          <polygon points="392.7,318.4 446.8,349.6 446.8,385.6 392.7,354.4" fill="#ffffff" stroke="#aebfe0" stroke-width="1"/>
+          <polygon points="420.8,302.2 474.8,333.4 446.8,349.6 392.7,318.4" fill="#f8fafe" stroke="#aebfe0" stroke-width="1"/>
+          <polygon points="474.8,344.2 446.8,360.4 446.8,385.6 474.8,369.4" fill="#1b51c1"/>
+          <polygon points="446.8,360.4 473.8,376.0 473.8,401.2 446.8,385.6" fill="#246bfe"/>
+          <polygon points="474.8,344.2 501.8,359.8 473.8,376.0 446.8,360.4" fill="#6a9afe"/>
+          <polygon points="449.3,365.0 472.1,378.2 472.1,391.4 449.3,378.2" fill="#dbe9ff" opacity="0.9"/>
+          <circle cx="403.1" cy="359.9" r="5" fill="#1e293b"/>
+          <circle cx="403.1" cy="359.9" r="2" fill="#7e93bd"/>
+          <circle cx="442.6" cy="382.7" r="5" fill="#1e293b"/>
+          <circle cx="442.6" cy="382.7" r="2" fill="#7e93bd"/>
+          <circle cx="464.4" cy="395.3" r="5" fill="#1e293b"/>
+          <circle cx="464.4" cy="395.3" r="2" fill="#7e93bd"/>
+          <line x1="395.8" y1="182.6" x2="395.8" y2="218.2" stroke="#246bfe" stroke-width="1.6" stroke-dasharray="2 4" opacity="0.65"/>
+          <circle cx="395.8" cy="218.2" r="3.4" fill="#246bfe"/>
+          <rect x="373.8" y="158.6" width="44" height="24" rx="8" fill="#ffffff" stroke="#e3e9f5" stroke-width="1"/>
+          <circle cx="382.8" cy="170.6" r="4" fill="#246bfe"/>
+          <text x="398.8" y="174.6" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#111827" text-anchor="middle">A01</text>
+          <line x1="489.4" y1="222.2" x2="489.4" y2="267.4" stroke="#f0784f" stroke-width="1.6" stroke-dasharray="2 4" opacity="0.65"/>
+          <circle cx="489.4" cy="267.4" r="3.4" fill="#f0784f"/>
+          <rect x="467.4" y="198.2" width="44" height="24" rx="8" fill="#ffffff" stroke="#e3e9f5" stroke-width="1"/>
+          <circle cx="476.4" cy="210.2" r="4" fill="#f0784f"/>
+          <text x="492.4" y="214.2" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#111827" text-anchor="middle">B12</text>
+          <line x1="325.2" y1="228.2" x2="325.2" y2="259.0" stroke="#22c55e" stroke-width="1.6" stroke-dasharray="2 4" opacity="0.65"/>
+          <circle cx="325.2" cy="259.0" r="3.4" fill="#22c55e"/>
+          <rect x="303.2" y="204.2" width="44" height="24" rx="8" fill="#ffffff" stroke="#e3e9f5" stroke-width="1"/>
+          <circle cx="312.2" cy="216.2" r="4" fill="#22c55e"/>
+          <text x="328.2" y="220.2" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#111827" text-anchor="middle">C07</text>
+        </svg>
+      </div>
     </div>
+    <div class="feature-caption">Bản đồ kho 3D — kiểm soát vị trí kệ hàng trực quan theo thời gian thực</div>
+  </div>
+
+  <div>
+   <div class="section-head" style="text-align:left;margin:0 0 32px">
+     <h2>Bộ tính năng toàn diện cho vận hành kho</h2>
+     <p>11 tính năng cốt lõi được thiết kế tối ưu hiệu suất và chuẩn hóa từng công đoạn.</p>
+   </div>
+   <div class="feature-list">
+    <div class="feature-item">
+     <div class="feature-illus">
+       <svg viewBox="0 0 160 100"><rect x="20" y="40" width="26" height="42" rx="4" fill="#c9dbff"/><rect x="52" y="26" width="26" height="56" rx="4" fill="#8bb2ff"/><rect x="84" y="46" width="26" height="36" rx="4" fill="#c9dbff"/><line x1="60" y1="14" x2="60" y2="88" stroke="#246bfe" stroke-width="2.5" stroke-dasharray="4 4"/><circle cx="60" cy="14" r="5" fill="#246bfe"/><circle cx="106" cy="34" r="12" fill="#fff" stroke="#246bfe" stroke-width="2.5"/><path d="M101 34l3.5 3.5 7-7" fill="none" stroke="#246bfe" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+     </div>
+     <div class="feature-text"><div class="num">1</div><div><h3>Quản lý tồn kho thông minh</h3><p>Khởi tạo tồn kho, quét mã nhập/xuất tự động và truy xuất lịch sử biến động tức thì.</p></div></div>
+    </div>
+    <div class="feature-item">
+     <div class="feature-illus">
+       <svg viewBox="0 0 160 100"><circle cx="26" cy="70" r="6" fill="#246bfe"/><path d="M26 70C46 70 40 30 70 30S94 66 118 50" fill="none" stroke="#8bb2ff" stroke-width="3" stroke-dasharray="1 8" stroke-linecap="round"/><rect x="104" y="36" width="30" height="26" rx="5" fill="#4d8cff"/><path d="M104 44h30M114 36v26" stroke="#fff" stroke-width="1.6"/><path d="M112 50l7 6 12-14" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/></svg>
+     </div>
+     <div class="feature-text"><div class="num">2</div><div><h3>Fulfillment & Lấy hàng tối ưu</h3><p>Tối ưu lộ trình nhặt hàng bằng thuật toán thông minh, giảm sai sót đóng gói.</p></div></div>
+    </div>
+    <div class="feature-item">
+     <div class="feature-illus">
+       <svg viewBox="0 0 160 100"><rect x="60" y="40" width="36" height="30" rx="4" fill="#8bb2ff"/><path d="M96 55h14v-18" fill="none" stroke="#246bfe" stroke-width="2.5" stroke-linecap="round"/><path d="M40 30a26 26 0 1 0 16-8" fill="none" stroke="#246bfe" stroke-width="3.5" stroke-linecap="round"/><path d="M56 14l0 12 -12 -2" fill="none" stroke="#246bfe" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+     </div>
+     <div class="feature-text"><div class="num">3</div><div><h3>Quản lý trả hàng chuyên nghiệp</h3><p>Tiếp nhận, kiểm tra và hoàn nhập kho theo quy trình minh bạch, chuẩn hóa.</p></div></div>
+    </div>
+    <div class="feature-item">
+     <div class="feature-illus">
+       <svg viewBox="0 0 160 100"><rect x="60" y="18" width="40" height="64" rx="10" fill="#fff" stroke="#246bfe" stroke-width="2.5"/><rect x="68" y="30" width="24" height="4" rx="2" fill="#c9dbff"/><rect x="68" y="40" width="24" height="4" rx="2" fill="#8bb2ff"/><rect x="68" y="50" width="16" height="4" rx="2" fill="#c9dbff"/><circle cx="80" cy="70" r="4" fill="#246bfe"/><path d="M108 32a18 18 0 0 1 0 20" fill="none" stroke="#4d8cff" stroke-width="2.5" stroke-linecap="round"/><path d="M116 26a28 28 0 0 1 0 32" fill="none" stroke="#8bb2ff" stroke-width="2.5" stroke-linecap="round"/></svg>
+     </div>
+     <div class="feature-text"><div class="num">4</div><div><h3>Ứng dụng PDA di động</h3><p>Thao tác linh hoạt ngay trên thiết bị di động, đồng bộ dữ liệu kho tức thời.</p></div></div>
+    </div>
+    <div class="feature-item">
+     <div class="feature-illus">
+       <svg viewBox="0 0 160 100"><rect x="30" y="38" width="34" height="28" rx="4" fill="#8bb2ff"/><path d="M64 44l18-10v34l-18-10z" fill="#4d8cff"/><circle cx="88" cy="30" r="5" fill="#e6484f"/><rect x="94" y="34" width="30" height="24" rx="12" fill="#fff" stroke="#246bfe" stroke-width="2.5"/><circle cx="109" cy="46" r="7" fill="none" stroke="#246bfe" stroke-width="2.5"/><circle cx="109" cy="46" r="2.4" fill="#246bfe"/></svg>
+     </div>
+     <div class="feature-text"><div class="num">5</div><div><h3>Quay video đóng gói & hàng hoàn</h3><p>Lưu lại bằng chứng cho từng đơn hàng, bảo vệ quyền lợi khi phát sinh khiếu nại.</p></div></div>
+    </div>
+    <div class="feature-item">
+     <div class="feature-illus">
+       <svg viewBox="0 0 160 100"><rect x="46" y="20" width="48" height="34" rx="6" fill="#fff" stroke="#246bfe" stroke-width="2.5"/><path d="M54 30h32M54 38h20" stroke="#8bb2ff" stroke-width="2.5" stroke-linecap="round"/><circle cx="78" cy="46" r="3" fill="#4d8cff"/><rect x="46" y="60" width="48" height="18" rx="4" fill="#dbe8ff"/><rect x="52" y="65" width="4" height="8" fill="#246bfe"/><rect x="60" y="65" width="2.5" height="8" fill="#246bfe"/><rect x="66" y="65" width="4" height="8" fill="#246bfe"/><rect x="74" y="65" width="2.5" height="8" fill="#246bfe"/><rect x="80" y="65" width="4" height="8" fill="#246bfe"/></svg>
+     </div>
+     <div class="feature-text"><div class="num">6</div><div><h3>Quản lý Hạn dùng & Seri</h3><p>Tự động hóa nguyên tắc FIFO/FEFO, truy xuất nguồn gốc sản phẩm chính xác.</p></div></div>
+    </div>
+    <div class="feature-item">
+     <div class="feature-illus">
+       <svg viewBox="0 0 160 100"><path d="M80 16l30 12v20c0 20-13 30-30 34-17-4-30-14-30-34V28z" fill="#fff" stroke="#246bfe" stroke-width="2.5" stroke-linejoin="round"/><line x1="80" y1="34" x2="80" y2="56" stroke="#f0784f" stroke-width="4" stroke-linecap="round"/><circle cx="80" cy="66" r="3" fill="#f0784f"/></svg>
+     </div>
+     <div class="feature-text"><div class="num">7</div><div><h3>Cảnh báo rủi ro đa mô hình</h3><p>Chủ động phát hiện và xử lý sớm các rủi ro vận hành trên mô hình B2C lẫn B2B.</p></div></div>
+    </div>
+    <div class="feature-item">
+     <div class="feature-illus">
+       <svg viewBox="0 0 160 100"><rect x="52" y="16" width="44" height="58" rx="6" fill="#fff" stroke="#246bfe" stroke-width="2.5"/><path d="M60 28h28M60 36h28M60 44h18" stroke="#c9dbff" stroke-width="2.5" stroke-linecap="round"/><path d="M52 62l10 8 10-8 10 8 10-8 4 3v9H52z" fill="#dbe8ff"/><circle cx="106" cy="60" r="16" fill="#246bfe"/><text x="106" y="66" font-size="16" font-weight="700" fill="#fff" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif">đ</text></svg>
+     </div>
+     <div class="feature-text"><div class="num">8</div><div><h3>Tính phí tự động, minh bạch</h3><p>Cấu hình bảng phí linh hoạt cho từng chủ hàng, loại bỏ sai sót tính toán thủ công.</p></div></div>
+    </div>
+    <div class="feature-item">
+     <div class="feature-illus">
+       <svg viewBox="0 0 160 100"><g fill="#8bb2ff"><path d="M24 70V50l14-8 14 8v20z"/><path d="M68 70V44l16-10 16 10v26z"/><path d="M116 70V54l12-7 12 7v16z"/></g><path d="M38 42v-8M84 34v-8M128 47v-7" stroke="#246bfe" stroke-width="2.5" stroke-linecap="round"/><circle cx="80" cy="18" r="5" fill="#246bfe"/><path d="M38 34l42-16 48 13" fill="none" stroke="#246bfe" stroke-width="2" stroke-dasharray="3 5"/></svg>
+     </div>
+     <div class="feature-text"><div class="num">9</div><div><h3>Quản lý Đa kho - Đa chủ hàng</h3><p>Đồng bộ OMS, bảo mật phân quyền và cho phép khách hàng theo dõi tồn kho chủ động.</p></div></div>
+    </div>
+    <div class="feature-item">
+     <div class="feature-illus">
+       <svg viewBox="0 0 160 100"><rect x="34" y="52" width="16" height="28" rx="3" fill="#c9dbff"/><rect x="58" y="38" width="16" height="42" rx="3" fill="#8bb2ff"/><rect x="82" y="24" width="16" height="56" rx="3" fill="#4d8cff"/><rect x="106" y="46" width="16" height="34" rx="3" fill="#8bb2ff"/><path d="M34 46l24-12 24 8 24-18" fill="none" stroke="#246bfe" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="106" cy="24" r="10" fill="#fff" stroke="#246bfe" stroke-width="2.5"/><path d="M106 19l1.8 4 4.2.4-3.2 2.8 1 4.1-3.8-2.3-3.8 2.3 1-4.1-3.2-2.8 4.2-.4z" fill="#246bfe"/></svg>
+     </div>
+     <div class="feature-text"><div class="num">10</div><div><h3>Quản lý KPI nhân sự</h3><p>Đo lường năng suất làm việc chính xác theo thời gian thực, minh bạch cơ chế thưởng phạt.</p></div></div>
+    </div>
+    <div class="feature-item">
+     <div class="feature-illus">
+       <svg viewBox="0 0 160 100"><path d="M80 16l50 20-50 20-50-20z" fill="#dbe8ff" stroke="#8bb2ff" stroke-width="1.5"/><path d="M30 36v22l50 20 50-20V36" fill="none" stroke="#c9dbff" stroke-width="1.5"/><path d="M80 36v22" stroke="#c9dbff" stroke-width="1.2"/><path d="M55 26l0 22M105 26l0 22" stroke="#c9dbff" stroke-width="1.2"/><path d="M60 32c0-7 6-12 12-12s12 5 12 12c0 9-12 20-12 20s-12-11-12-20z" fill="#246bfe"/><circle cx="72" cy="31" r="4.5" fill="#fff"/><path d="M96 46c0-6 5-10 10-10s10 4 10 10c0 7-10 16-10 16s-10-9-10-16z" fill="#4d8cff"/><circle cx="106" cy="45" r="3.6" fill="#fff"/></svg>
+     </div>
+     <div class="feature-text"><div class="num">11</div><div><h3>Sơ đồ mặt bằng kho 3D</h3><p>Quản lý toàn bộ mặt bằng kho trực quan, tối ưu hóa sắp xếp và phân bổ hàng hóa.</p></div></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="integrations">
+ <div class="container">
+  <div class="section-head">
+    <h2>Kết nối hệ sinh thái đa nền tảng</h2>
+    <p>Đơn giản hóa quy trình bán hàng đa kênh và kết nối trực tiếp các đơn vị vận chuyển.</p>
+  </div>
+  <div class="platforms">
+   <div class="platform" style="color:#FB7701">Temu</div>
+   <div class="platform" style="color:#111">TikTok <span style="color:#FE2C55">Shop</span></div>
+   <div class="platform" style="color:#111">SHEIN</div>
+   <div class="platform" style="color:#131921">amazon</div>
+   <div class="platform" style="color:#0071CE">Walmart</div>
+   <div class="platform"><b style="color:#E53238">e</b><b style="color:#0064D2">B</b><b style="color:#F5AF02">a</b><b style="color:#86B817">y</b></div>
+   <div class="platform" style="color:#EE4D2D">Shopee</div>
+   <div class="platform" style="color:#5E8E3E">Shopify</div>
+   <div class="platform" style="color:#0F146D">Lazada</div>
+   <div class="platform" style="color:#246bfe">Dianxiaomi</div>
+   <div class="platform" style="color:#FF6A00">BigSeller</div>
+   <div class="platform" style="color:#2867E0">UpSeller</div>
+   <div class="platform" style="color:#6C3FF2">4Seller</div>
+   <div class="platform" style="color:#1B5FBB">ShipStation</div>
+   <div class="platform" style="color:#E4032E">J&T Express</div>
+   <div class="platform"><b style="color:#4D148C">Fed</b><b style="color:#FF6600">Ex</b></div>
+   <div class="platform" style="color:#333366">USPS</div>
+   <div class="platform" style="color:#00A99D">17TRACK</div>
+  </div>
+ </div>
+</section>
+
+<section id="demo">
+ <div class="container">
+   <div class="cta">
+     <h2>Sẵn sàng tối ưu vận hành kho hàng?</h2>
+     <p>Trải nghiệm giải pháp WMS hiện đại, giúp tiết kiệm chi phí và nâng cao năng suất ngay hôm nay.</p>
+     <a class="btn" href="https://www.jfwms.com/vi?ws=ZBcBL" target="_blank" rel="noopener">Đăng ký trải nghiệm</a>
+   </div>
+ </div>
+</section>
+</main>
+
+<footer id="about">
+ <div class="container">
+  <div class="footer-grid">
+   <div>
+     <div class="logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAABVCAYAAAB3hGnPAAAJ+0lEQVR4nO2dX4gdVx3HP5GKAQsuWMEHH67sFlesZEOiibCykbS2UjUrqSRQ2yawZftnZTe0UgVhN9iyhUaSmEiqRnoD0RasdktbktI2XWlKI7bkPlQSuEr34FCUPvThQ2R8ePe7M2dmzp2733d3NrsfGM7u
+.33m/85vz6u
+76KIsiCqX4i3uV9A34IAreA2S
+7p
+3
+fA5Y7mIoo2lCkXAf4B1e4Xb
+wEPlC8
+R/
+R6wI
+oag
+/9vgSeBi5I5M9m2K2R/1fI1D2m/39Xg8y6Jv90m8sV9U3gU4A
+7o
+aEre1P
+zG9A0f3k
+j
+p
+c83M
+k616a2A9M
+O
+j343yE
+K+
+rNf/O
+/rNl
+N+7w2x
++eY9kEa4nE22P8lC+kI1xS
+91s2131I9Xb63c8S9
+58D6L
+1k4
+844A5S2l/
+CqI326vG9m4P440E63f538l0e3aH133/P/21f
+3O2
+k2l39x1f8O
+r8+m/0b2E2G90f7+w4d/21P1
+uR/5
+R7d/5
+n7533s/s6
+J
+6+s9/s/y+eT7wJk/4l7f+w
+x151j31E5W2A/8I5q8t99
+R8hUf7e/
+7
+g8P4d
+N3/0a/7+3y3/f
+O3P/3+4k4P8m8H/7t4
+i3aO20s1L/s9j0
+/a6+gD/R1d8s7
+58z/fX26l2/vH+d/2i3mI65yP
+7/4X
+f79
+zT2fX9o
+l7O8Lp19e34/5+M
+b50t9y
+3H3
+O3wD6S
+rO
+r6r6a6m0u9e
+8n
+iI/I90/t07u/0e/m217/l//9m9+X
+v94+J
+n9x
+d9b
+G2a3u7/1a8L93m+mP0/
+K/l/l8
+k
+G8
+R/6/d09b8+qj02f7kI18p
+a
+7x/3S0f9/
+x8A/01wI32r2b/m7b57w8E0f+zV3/
+l
+v58g1f4i3x
+i
+G3N4l3f0e8f8q7
+8a/36jO8a31u/e6fJ9
+58f/m
++q+1/1s
+rN9o3S4f86d/t
+R1D6e8I5y5f/mP02x2a60s8m7+f
+v
+N5n1a/u2p5fS1//+
+w+
+c3l8
+3u
+o4l0h4I
+6s
+yE
+v9q
+o40e
+P
+gG46k3d/4k3y/i
+/t5d4eS6j8
+w0a9A3t9
+q
+p4mI
+5y0d
+7z/eR0L
+a6p8y
+a7
+nUf0t9A2
+0j/h
+O3aI9q2r11E
+5A8d0x
+s1+1E4G3+f
+f4/x1O06x
+/l8bA0
+39+N
+XwGfA3f5
+I75o
+1a52y3O/x58D5X4f
+L4t9N8T4/3X2O3l58e2x
+t+73o9f
+c3z6l81x99O4p7E3i1tH6I5P912A3l2Nf55X5/l7s3/O1n3f3a
+u6yG4i/5j/e7/8o1x+eH/z/uP8+f9Xf+L
+5c/1P+O/28/O6m7l64e
+N3cR
+6x0130X83
+9i7x7706x150i/5
+y
+37x/4g/e
+w1vYIe8/f
+z0/55g12H
+M/2X0x/A
+0u+4A9s0X9g
+9h2/0qH
+a48u3
+R
+m+eL/7
+m9903x2p/u8
+8k3+y1n0r5xX40+f2R7e0S7v8u3f7x8A9t8S8d2J6P/
+o/8S19X8f1c/7
+e
+m/c3/m3q
+5wP2Gf172vS0L
+6L6I6r/U/5m20n/s3x7aIe
+P8z4p0+1i
+T18r/gX4O7e98k3y7l2r2e8I/R/6+9S2+
+j836I90/h2t5
+8P
+/JpW3/X7q+0z1/1rX9/3J6e1c070D2M8R2h3690d7607l6A
+Oq34rX
+N8x/zS/m98wX
+3j
+R8D+S3m/9x4y9j90
+E
+9z/0J
+w3wFf8c
+n8A1t9w
+wJ22J2/l3h7A
+6/R
+1R3x/6/wzO2q
+g0O0j5A+A/q/w0/l8uW6X+x2X9s2195t
+78X5yE+o
+1/s3mP30
+s1
+J
+2aR1v5/f8y+0p0f1f1D0d/v3
+9e9a
+p
+3
+L7/2m79fA/Oa8L
+v8z8o021i
+o
+6J2fX
+p8tI/3
+d73n753b00S7/9/d+p6/l1q9c/x5xXw
+40x8/l/S25
+o2x9i/f4z0E
+z
+qf
+4s5u
+/p5A
+O3/g8A6o+S+p
+S
+g/t5
+0fX
+e
+s52x
+x5+M9e57S+z2m92f15s/j501p4j+T71f/z/
+p4xO2x6f
+A30i8N/8T9u3pL
+/
+f0d7e5w58b9f+z1k4z/018b209y/l7aH/95e42
+uN9vT/c2P1
+sQ+Ld3d
+L18i33i0D/e58G1w5i9m9A
+b2f2S2f4T0q/8d1
+f6s
+R4k3eM0M5/8z8
+a1+n+x0x/O4n8w0X4a8h2pI
+k+J8gP21yX5s6p5Jt4X
+L2371z
+0/jL5x323l9v1t5O4o
+7I6eL/3n/j+f
+6m
+xJ
+/3l1P
+/e
+s5
+i+e
+1i/P/S
+2N6H5g3v7i/S71c7R3o3R/2J8d227f/T/A3s0H
+L5m1M2E
+p
+X
+/A37e/2Oq+528j/u
+u
+S3
+r7yZ
+h
+g3Xj3T+Dq1c/e/
+8Xf9
+pL+f3x73P/d8aI9890f5d471wX7x2eI3q+7S6c3t2X50/w
+m9r5x8z3O
+z7uN5z0m+q9s48G24T1+2j32u1/P/A3j2zV3u6A
+63L31o9l15+N/l4p3l7+19a
+0s2t5+19f/sJ+z3
+y4xR
+/
+s9wX9f/2+
+2d5d8N/T20d4
+p+f7s7cO6e32d
+mI35c/S+3X21L3e7yO1eI2z30X+R18P0p4f
+O
+k/j1xI+22230S/A/0O2pXm7s6j7s6R9aD1
+4X3vD4
+f1+6vT5eP14/
+9
+A9eT4S1X0v+97g3G0x8f0c978b7A
+N9j3s
+L14zGg
+I
+f4t1f4r8z3v6o
+X+1e18c/y/W71a7yv28sN9b83m3X6u/U08v0n
+L
+7d/p
+2L5
+b0Zf/J2f9d5p7a
+r/G7j3f54+
+y
+t59r9I
+f2oX2
+q+l1s
+c20S
+xJv9pP
+l7d363d2w129+x8n0P
+u37uR/3/o8+f+7
+z/m7k8x5n9wX5yP2uN7f/56e7
+l/z98939sN54x5f/5v3f
+t
+f
+N/I3j9j95v3e2w10P/Nf
+r8
+R/7e7w9Ie8x6s7f1l1P0R38a8L3I/W/oX2yvD
+S7k
+g11x3w7jP5g4
+O5y8G93o77z3i
+v
+9v37s
+c7W7y/L/S/r/
+l0d7l1r/e5r99fJvN/9l0v
+h1P7p
+o
+i6/
+3a8D/a4x5R5/9vD82r1sH3A
+N7L4f0d6j474+v8d30/
+h9f
+m3P0uD+c+w3
+L8x1L8d6a8b79v/2y6l/J774N7v8n/y6yP3+38w1b8n3h5L8u90
+T87e3/9e7R9I9h/A/97/A7eE57421Yn0AAAAAElFTkSuQmCC" alt="JFWMS">
+     </div>
+     <p style="margin-top:16px">Hệ thống quản lý kho hàng chuẩn hóa và tối ưu cho doanh nghiệp hiện đại.</p>
+   </div>
+   <div>
+     <h3>Giải pháp</h3>
+     <a href="#scenarios">Fulfillment</a>
+     <a href="#scenarios">B2B</a>
+     <a href="#scenarios">FBA</a>
+     <a href="#scenarios">Kho đại lý</a>
+     <a href="#scenarios">Phân phối hàng hoá</a>
+   </div>
+   <div>
+     <h3>Hỗ trợ</h3>
+     <a href="#">Trung tâm trợ giúp</a>
+     <a href="#">Tin tức & Sự kiện</a>
+     <a href="#">Chính sách bảo mật</a>
+   </div>
+   <div>
+     <h3>Liên hệ</h3>
+     <a href="tel:0388251602">0388 251 602</a>
+     <a href="tel:0388251602">Ms Rius</a>
+     <a href="#demo">Đăng ký Demo</a>
+   </div>
+  </div>
+  <div class="copyright">© 2026 JFWMS trực thuộc DianXiaoMi. All rights reserved.</div>
+ </div>
+</footer>
 
-    <script>
-        // Storage Key
-        const STORAGE_KEY = 'giftcode_studio_cyber_v3';
-
-        // Initial Data Seed
-        const INITIAL_CODES = [
-            {
-                id: '1',
-                code: 'CYBER_VIP_2026',
-                type: 'SQL',
-                script: "UPDATE users SET diamonds = diamonds + 1000, vip_rank = 3 WHERE user_id = '{user_id}';\nINSERT INTO logs_giftcode (user_id, code) VALUES ('{user_id}', '{code}');",
-                usedCount: 142,
-                maxUses: 500,
-                expiryDate: '2026-12-31',
-                items: [
-                    { name: 'Kim Cương', qty: 1000, icon: 'fa-gem', color: 'text-cyan-400' },
-                    { name: 'Thẻ VIP 3', qty: 1, icon: 'fa-crown', color: 'text-amber-400' }
-                ]
-            },
-            {
-                id: '2',
-                code: 'LEGEND_DRAGON_KIT',
-                type: 'JSON',
-                script: JSON.stringify({
-                    "action": "GRANT_ITEMS",
-                    "player": "{user_id}",
-                    "rewards": [
-                        {"id": "dragon_sword", "name": "Long Thần Kiếm", "count": 1},
-                        {"id": "gold_coin", "name": "Vàng", "count": 500000}
-                    ]
-                }, null, 2),
-                usedCount: 50,
-                maxUses: 50,
-                expiryDate: '2026-11-20',
-                items: [
-                    { name: 'Long Thần Kiếm', qty: 1, icon: 'fa-shield-halved', color: 'text-purple-400' },
-                    { name: 'Vàng', qty: 500000, icon: 'fa-coins', color: 'text-amber-300' }
-                ]
-            },
-            {
-                id: '3',
-                code: 'MC_GOD_PACKAGE',
-                type: 'COMMAND',
-                script: "/give {user_id} minecraft:netherite_sword{Enchantments:[{id:\"sharpness\",lvl:10}]} 1\n/effect give {user_id} minecraft:regeneration 300 2",
-                usedCount: 8,
-                maxUses: 100,
-                expiryDate: '2026-10-30',
-                items: [
-                    { name: 'Netherite Sword', qty: 1, icon: 'fa-wand-magic', color: 'text-emerald-400' }
-                ]
-            }
-        ];
-
-        let giftcodes = [];
-        let soundEnabled = true;
-        let totalExecutionsCount = 142 + 50 + 8;
-
-        // Audio Synth Engine using Web Audio API
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-        function playSound(type) {
-            if (!soundEnabled) return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-
-                const now = audioCtx.currentTime;
-
-                if (type === 'click') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(600, now);
-                    osc.frequency.exponentialRampToValueAtTime(200, now + 0.05);
-                    gain.gain.setValueAtTime(0.1, now);
-                    gain.gain.linearRampToValueAtTime(0.01, now + 0.05);
-                    osc.start(now);
-                    osc.stop(now + 0.05);
-                } else if (type === 'success') {
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(440, now);
-                    osc.frequency.setValueAtTime(880, now + 0.1);
-                    gain.gain.setValueAtTime(0.15, now);
-                    gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
-                    osc.start(now);
-                    osc.stop(now + 0.3);
-                } else if (type === 'error') {
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(220, now);
-                    osc.frequency.setValueAtTime(110, now + 0.1);
-                    gain.gain.setValueAtTime(0.2, now);
-                    gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
-                    osc.start(now);
-                    osc.stop(now + 0.25);
-                } else if (type === 'typing') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(800 + Math.random() * 200, now);
-                    gain.gain.setValueAtTime(0.02, now);
-                    gain.gain.linearRampToValueAtTime(0.001, now + 0.03);
-                    osc.start(now);
-                    osc.stop(now + 0.03);
-                }
-            } catch (e) {}
-        }
-
-        function playTypingSound() {
-            playSound('typing');
-        }
-
-        function toggleSound() {
-            soundEnabled = !soundEnabled;
-            const icon = document.getElementById('soundIcon');
-            icon.className = soundEnabled ? 'fa-solid fa-volume-high text-sm' : 'fa-solid fa-volume-xmark text-sm text-rose-400';
-            showToast(soundEnabled ? 'Đã bật âm thanh' : 'Đã tắt âm thanh', 'info');
-        }
-
-        // Initialize App
-        window.onload = function() {
-            loadData();
-            initDefaultRewardItems();
-            setStudioDefaultDate();
-            updateStudioScriptPreview();
-            updateMetrics();
-            renderSimQuickCodes();
-            renderDatabaseTable();
-
-            // Set default tab styles
-            switchTab('studio');
-        };
-
-        function loadData() {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                try {
-                    giftcodes = JSON.parse(saved);
-                } catch(e) {
-                    giftcodes = [...INITIAL_CODES];
-                }
-            } else {
-                giftcodes = [...INITIAL_CODES];
-                saveData();
-            }
-        }
-
-        function saveData() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(giftcodes));
-            updateMetrics();
-            renderSimQuickCodes();
-            renderDatabaseTable();
-        }
-
-        function resetDataToDefault() {
-            if (confirm('Khôi phục danh sách giftcode về trạng thái ban đầu?')) {
-                giftcodes = JSON.parse(JSON.stringify(INITIAL_CODES));
-                saveData();
-                showToast('Đã khôi phục dữ liệu mẫu', 'info');
-            }
-        }
-
-        // Tab Switcher
-        function switchTab(tabId) {
-            playSound('click');
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('bg-cyan-500/10', 'text-cyan-400', 'border', 'border-cyan-500/30');
-                btn.classList.add('text-slate-400');
-            });
-
-            const activeTab = document.getElementById(`tab-${tabId}`);
-            if (activeTab) activeTab.classList.remove('hidden');
-
-            const activeBtn = document.getElementById(`tabBtn-${tabId}`);
-            if (activeBtn) {
-                activeBtn.classList.add('bg-cyan-500/10', 'text-cyan-400', 'border', 'border-cyan-500/30');
-                activeBtn.classList.remove('text-slate-400');
-            }
-        }
-
-        // Update Dashboard Metrics Header
-        function updateMetrics() {
-            document.getElementById('statTotalCodes').innerText = giftcodes.length;
-            const claims = giftcodes.reduce((sum, g) => sum + g.usedCount, 0);
-            document.getElementById('statTotalClaims').innerText = claims;
-            document.getElementById('statTotalExecutions').innerText = totalExecutionsCount;
-        }
-
-        // Dynamic Reward Item Builder
-        let rewardItems = [];
-
-        function initDefaultRewardItems() {
-            rewardItems = [
-                { name: 'Kim Cương', qty: 500 },
-                { name: 'Vàng', qty: 10000 }
-            ];
-            renderRewardItemRows();
-        }
-
-        function addRewardItemRow() {
-            playSound('click');
-            rewardItems.push({ name: 'Vật Phẩm Mới', qty: 1 });
-            renderRewardItemRows();
-            updateStudioScriptPreview();
-        }
-
-        function removeRewardItemRow(index) {
-            playSound('click');
-            rewardItems.splice(index, 1);
-            renderRewardItemRows();
-            updateStudioScriptPreview();
-        }
-
-        function renderRewardItemRows() {
-            const list = document.getElementById('rewardItemsList');
-            list.innerHTML = rewardItems.map((item, idx) => `
-                <div class="flex items-center gap-2">
-                    <input type="text" value="${item.name}" oninput="rewardItems[${idx}].name = this.value; updateStudioScriptPreview();"
-                        class="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1 text-xs text-slate-200 focus:outline-none focus:border-cyan-500" placeholder="Tên item">
-                    <input type="number" value="${item.qty}" min="1" oninput="rewardItems[${idx}].qty = parseInt(this.value) || 1; updateStudioScriptPreview();"
-                        class="w-20 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1 text-xs text-slate-200 focus:outline-none focus:border-cyan-500" placeholder="SL">
-                    <button type="button" onclick="removeRewardItemRow(${idx})" class="p-1 text-slate-500 hover:text-rose-400 transition-colors">
-                        <i class="fa-solid fa-xmark text-xs"></i>
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        // Studio Script Generator & Preview
-        function updateStudioScriptPreview() {
-            const type = document.querySelector('input[name="studioType"]:checked')?.value || 'SQL';
-            document.getElementById('previewTypeBadge').innerText = type;
-
-            let script = '';
-            if (type === 'SQL') {
-                const updates = rewardItems.map(i => `${i.name.toLowerCase()} = ${i.name.toLowerCase()} + ${i.qty}`).join(', ');
-                script = `UPDATE users SET ${updates || 'diamonds = diamonds + 100'} WHERE user_id = '{user_id}';\nINSERT INTO giftcode_claims (code, user_id) VALUES ('{code}', '{user_id}');`;
-            } else if (type === 'JSON') {
-                script = JSON.stringify({
-                    "event": "CLAIM_REWARD",
-                    "code": "{code}",
-                    "player": "{user_id}",
-                    "rewards": rewardItems.map(i => ({ "item": i.name, "amount": i.qty }))
-                }, null, 2);
-            } else if (type === 'COMMAND') {
-                script = rewardItems.map(i => `/give {user_id} item:${i.name.toLowerCase()} ${i.qty}`).join('\n');
-                if (!script) script = "/give {user_id} minecraft:diamond 10";
-            }
-
-            document.getElementById('studioRawScript').value = script;
-            document.getElementById('studioCompiledPreview').innerText = script;
-        }
-
-        function setStudioDefaultDate() {
-            const dateInput = document.getElementById('studioExpiry');
-            const d = new Date();
-            d.setDate(d.getDate() + 30);
-            dateInput.value = d.toISOString().split('T')[0];
-        }
-
-        function generateSmartCode() {
-            playSound('click');
-            const prefixes = ['CYBER', 'NEON', 'VIP', 'MEGA', 'DRAGON', 'PROMO'];
-            const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
-            const rand = Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('studioCode').value = `${prefix}_${rand}_2026`;
-        }
-
-        // Studio Submit
-        document.getElementById('studioForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const code = document.getElementById('studioCode').value.trim().toUpperCase();
-            const type = document.querySelector('input[name="studioType"]:checked').value;
-            const script = document.getElementById('studioRawScript').value.trim();
-            const maxUses = parseInt(document.getElementById('studioMaxUses').value);
-            const expiryDate = document.getElementById('studioExpiry').value;
-
-            if (giftcodes.some(g => g.code === code)) {
-                playSound('error');
-                showToast('Mã giftcode này đã tồn tại!', 'error');
-                return;
-            }
-
-            const newObj = {
-                id: Date.now().toString(),
-                code,
-                type,
-                script,
-                usedCount: 0,
-                maxUses,
-                expiryDate,
-                items: rewardItems.map(i => ({ name: i.name, qty: i.qty, icon: 'fa-box', color: 'text-cyan-400' }))
-            };
-
-            giftcodes.unshift(newObj);
-            saveData();
-            playSound('success');
-            showToast(`Đã tạo mã ${code} thành công!`, 'success');
-
-            // Reset Code field
-            document.getElementById('studioCode').value = '';
-        });
-
-        // Use Command Template
-        function useTemplate(type, script) {
-            switchTab('studio');
-            document.querySelector(`input[name="studioType"][value="${type}"]`).checked = true;
-            document.getElementById('studioRawScript').value = script;
-            document.getElementById('studioCompiledPreview').innerText = script;
-            if(!document.getElementById('studioCode').value) generateSmartCode();
-            showToast(`Đã nạp mẫu ${type} vào Studio`, 'info');
-        }
-
-        // Quick Code Buttons for Simulator
-        function renderSimQuickCodes() {
-            const container = document.getElementById('simQuickCodes');
-            container.innerHTML = giftcodes.map(g => `
-                <div onclick="selectSimCode('${g.code}')" class="p-2.5 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl flex items-center justify-between cursor-pointer transition-all group">
-                    <div>
-                        <span class="text-xs font-mono font-bold text-cyan-300 group-hover:text-cyan-200">${g.code}</span>
-                        <span class="text-[10px] text-slate-500 block font-mono">${g.type} • ${g.usedCount}/${g.maxUses} lượt</span>
-                    </div>
-                    <i class="fa-solid fa-play text-xs text-slate-600 group-hover:text-emerald-400 transition-colors"></i>
-                </div>
-            `).join('');
-        }
-
-        function selectSimCode(code) {
-            playSound('click');
-            document.getElementById('simCodeInput').value = code;
-            showToast(`Đã chọn mã: ${code}`, 'info');
-        }
-
-        // Live Simulation Terminal Execution
-        function runLiveRedeem() {
-            const playerId = document.getElementById('simPlayerId').value.trim();
-            const codeInput = document.getElementById('simCodeInput').value.trim().toUpperCase();
-
-            if (!playerId || !codeInput) {
-                playSound('error');
-                showToast('Vui lòng nhập Player ID và Mã Giftcode', 'error');
-                return;
-            }
-
-            appendSimLog(`<span class="text-slate-500">[${new Date().toLocaleTimeString()}]</span> <span class="text-cyan-400">&gt; REQUEST_CLAIM</span> player="${playerId}" code="${codeInput}"`);
-
-            const match = giftcodes.find(g => g.code === codeInput);
-            const today = new Date().toISOString().split('T')[0];
-
-            if (!match) {
-                setTimeout(() => {
-                    playSound('error');
-                    appendSimLog(`<span class="text-slate-500">[${new Date().toLocaleTimeString()}]</span> <span class="text-rose-400">[ERROR 404]</span> Mã giftcode không hợp lệ!`, 'error');
-                    showToast('Mã giftcode không tồn tại!', 'error');
-                }, 200);
-                return;
-            }
-
-            if (match.expiryDate < today) {
-                setTimeout(() => {
-                    playSound('error');
-                    appendSimLog(`<span class="text-slate-500">[${new Date().toLocaleTimeString()}]</span> <span class="text-rose-400">[EXPIRED]</span> Mã giftcode đã hết hạn (${match.expiryDate})!`, 'error');
-                    showToast('Mã đã hết hạn!', 'error');
-                }, 200);
-                return;
-            }
-
-            if (match.usedCount >= match.maxUses) {
-                setTimeout(() => {
-                    playSound('error');
-                    appendSimLog(`<span class="text-slate-500">[${new Date().toLocaleTimeString()}]</span> <span class="text-amber-400">[MAX_REACHED]</span> Mã giftcode đã hết lượt sử dụng!`, 'warning');
-                    showToast('Mã đã hết lượt dùng!', 'error');
-                }, 200);
-                return;
-            }
-
-            // Success Execution
-            match.usedCount += 1;
-            totalExecutionsCount += 1;
-            saveData();
-
-            const processedScript = match.script
-                .replace(/\{user_id\}/g, playerId)
-                .replace(/\{code\}/g, match.code);
-
-            setTimeout(() => {
-                playSound('success');
-                appendSimLog(`<span class="text-slate-500">[${new Date().toLocaleTimeString()}]</span> <span class="text-emerald-400">[200 OK]</span> Đổi quà thành công! Đang kích hoạt RCON Engine...`);
-                
-                const scriptLines = processedScript.split('\n').map(l => `  <span class="text-amber-300">&gt; ${escapeHtml(l)}</span>`).join('\n');
-                appendSimLog(`<div class="my-1.5 p-2 bg-slate-900 border-l-2 border-emerald-500 rounded font-mono text-[11px]">${scriptLines}</div>`);
-
-                // Show Live Item Drop Visualizer
-                showItemDropAnimation(match);
-                showToast(`Đổi mã ${match.code} thành công!`, 'success');
-            }, 300);
-        }
-
-        function showItemDropAnimation(match) {
-            const container = document.getElementById('itemDropContainer');
-            const list = document.getElementById('itemDropList');
-
-            const items = match.items && match.items.length > 0 ? match.items : [
-                { name: 'Phần Quà Tặng', qty: 1, icon: 'fa-gift', color: 'text-amber-400' }
-            ];
-
-            list.innerHTML = items.map(i => `
-                <div class="px-3 py-2 bg-slate-900/90 border border-slate-700/80 rounded-xl flex items-center gap-2 shadow-lg">
-                    <i class="fa-solid ${i.icon || 'fa-box'} ${i.color || 'text-cyan-400'} text-base"></i>
-                    <div>
-                        <p class="text-xs font-bold text-slate-100">${i.name}</p>
-                        <p class="text-[10px] font-mono text-slate-400">x${i.qty}</p>
-                    </div>
-                </div>
-            `).join('');
-
-            container.classList.remove('hidden');
-        }
-
-        function appendSimLog(html) {
-            const terminal = document.getElementById('simTerminalLog');
-            const div = document.createElement('div');
-            div.innerHTML = html;
-            terminal.appendChild(div);
-            terminal.scrollTop = terminal.scrollHeight;
-        }
-
-        function clearTerminal() {
-            playSound('click');
-            document.getElementById('simTerminalLog').innerHTML = `<p class="text-slate-500 flex items-center gap-2"><span class="text-emerald-500">$</span> Terminal logs cleared.</p>`;
-        }
-
-        // Render Database Table
-        function renderDatabaseTable() {
-            const tbody = document.getElementById('databaseTableBody');
-            const search = document.getElementById('dbSearchInput').value.trim().toLowerCase();
-            const filterType = document.getElementById('dbFilterType').value;
-
-            const filtered = giftcodes.filter(g => {
-                const matchSearch = g.code.toLowerCase().includes(search) || g.script.toLowerCase().includes(search);
-                const matchType = filterType === 'ALL' || g.type === filterType;
-                return matchSearch && matchType;
-            });
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="py-8 text-center text-slate-500 font-sans">
-                            <i class="fa-solid fa-folder-open text-2xl block mb-2"></i> Không tìm thấy dữ liệu phù hợp.
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            const today = new Date().toISOString().split('T')[0];
-
-            tbody.innerHTML = filtered.map(g => {
-                const isExpired = g.expiryDate < today;
-                const isLimit = g.usedCount >= g.maxUses;
-                const percent = Math.min(100, Math.round((g.usedCount / g.maxUses) * 100));
-
-                let badge = '<span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full font-sans font-semibold">Active</span>';
-                if (isExpired) badge = '<span class="text-[10px] bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded-full font-sans font-semibold">Hết hạn</span>';
-                else if (isLimit) badge = '<span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-full font-sans font-semibold">Hết lượt</span>';
-
-                return `
-                    <tr class="hover:bg-slate-800/40 transition-colors">
-                        <td class="py-3.5 px-4 font-bold text-slate-200">
-                            <div class="flex items-center gap-2">
-                                <span>${g.code}</span>
-                                ${badge}
-                            </div>
-                        </td>
-                        <td class="py-3.5 px-4">
-                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-cyan-400 rounded border border-slate-700 font-bold">${g.type}</span>
-                        </td>
-                        <td class="py-3.5 px-4 max-w-xs truncate text-slate-400 text-[11px]" title="${escapeHtml(g.script)}">
-                            ${escapeHtml(g.script.split('\n')[0])}
-                        </td>
-                        <td class="py-3.5 px-4">
-                            <div class="w-32 mx-auto">
-                                <div class="flex justify-between text-[10px] mb-1 text-slate-400">
-                                    <span>${g.usedCount}/${g.maxUses}</span>
-                                    <span>${percent}%</span>
-                                </div>
-                                <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden border border-slate-800">
-                                    <div class="bg-gradient-to-r from-cyan-500 to-indigo-500 h-full" style="width: ${percent}%"></div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="py-3.5 px-4 text-slate-400 text-[11px]">${g.expiryDate}</td>
-                        <td class="py-3.5 px-4 text-right space-x-1">
-                            <button onclick="inspectScript('${g.id}')" title="Xem chi tiết Script" class="p-1.5 text-slate-400 hover:text-cyan-400 hover:bg-slate-800 rounded-lg transition-all">
-                                <i class="fa-solid fa-code text-xs"></i>
-                            </button>
-                            <button onclick="deleteCode('${g.id}')" title="Xóa Mã" class="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition-all">
-                                <i class="fa-regular fa-trash-can text-xs"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        // Inspector Modal
-        let activeInspectScript = '';
-
-        function inspectScript(id) {
-            playSound('click');
-            const g = giftcodes.find(item => item.id === id);
-            if (!g) return;
-
-            document.getElementById('inspectTitle').innerText = g.code;
-            document.getElementById('inspectBadge').innerText = g.type;
-            document.getElementById('inspectScriptText').innerText = g.script;
-            activeInspectScript = g.script;
-
-            const modal = document.getElementById('inspectorModal');
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-        }
-
-        function closeInspectorModal() {
-            playSound('click');
-            document.getElementById('inspectorModal').classList.add('opacity-0', 'pointer-events-none');
-        }
-
-        function copyInspectScript() {
-            copyToClipboard(activeInspectScript);
-        }
-
-        function deleteCode(id) {
-            playSound('click');
-            if (confirm('Xóa mã giftcode này khỏi hệ thống?')) {
-                giftcodes = giftcodes.filter(g => g.id !== id);
-                saveData();
-                showToast('Đã xóa mã giftcode', 'info');
-            }
-        }
-
-        function copyPreviewScript() {
-            const script = document.getElementById('studioCompiledPreview').innerText;
-            copyToClipboard(script);
-        }
-
-        // Copy Utility
-        function copyToClipboard(text) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            playSound('success');
-            showToast('Đã sao chép vào bộ nhớ tạm!', 'success');
-        }
-
-        // Toast System
-        function showToast(msg, type = 'success') {
-            const toast = document.getElementById('cyberToast');
-            const toastMsg = document.getElementById('toastMsg');
-            const toastIcon = document.getElementById('toastIcon');
-
-            toastMsg.innerText = msg;
-            if (type === 'success') toastIcon.className = 'fa-solid fa-circle-check text-emerald-400 text-base';
-            else if (type === 'error') toastIcon.className = 'fa-solid fa-circle-xmark text-rose-400 text-base';
-            else toastIcon.className = 'fa-solid fa-circle-info text-cyan-400 text-base';
-
-            toast.classList.remove('translate-y-10', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-10', 'opacity-0');
-            }, 3000);
-        }
-
-        function escapeHtml(str) {
-            return str
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-    </script>
 </body>
 </html>
